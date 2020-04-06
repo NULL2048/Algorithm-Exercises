@@ -1,4 +1,8 @@
-import java.util.* ;   
+package 最长回文串;
+
+import java.util.HashSet;
+import java.util.Scanner;
+
 public class Demo {
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
