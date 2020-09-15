@@ -26,6 +26,7 @@ public class Main {
                 queue.offer(tempNode.getRight());
             }
         }
+        
         out.flush();
     }
 }
