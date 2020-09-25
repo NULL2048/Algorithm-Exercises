@@ -41,7 +41,7 @@ public class 归并排序 {
         // 因为传入的是下标值，所以left和right表示的是下标值
         // 当递归到还剩下两个元素的时候就可以返回了，所以left>=right就直接返回就行了，left + 1 = right的时候正好只剩下两个元素
         if (left < right) {
-            //  防止溢出
+            // 防止溢出
             int mid = left + ((right - left) >> 1);
             mergeSort(arr, left, mid);
             mergeSort(arr, mid + 1, right);
