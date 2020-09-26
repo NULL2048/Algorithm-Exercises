@@ -10,8 +10,8 @@ public class MaxGap {
 
         // 输入数组的长度  注意长度是len  但是下标范围是[0,len-1]
         int len = nums.length;
-        // 创建每一个桶要保存的数据数组
 
+        // 创建每一个桶要保存的数据数组
         // 多开辟一个桶，所以要让桶的下标范围是[0, len]， 所以数组开辟len+1
         // 当前桶是否加入了数
         boolean[] hasNum = new boolean[len + 1];
