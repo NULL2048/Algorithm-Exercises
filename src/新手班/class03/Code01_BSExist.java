@@ -4,8 +4,9 @@ import java.util.Arrays;
 /*
     判断有序数组中是否存在num
 
-    就记住，二分法 mid=(L + R) / 2
-    更新的时候就是
+    就记住，只要是用二分法 ，mid就这样计算
+    mid=(L + R) / 2
+    更新的时候就是这样计算
     L = mid + 1
     R = mid - 1
 
