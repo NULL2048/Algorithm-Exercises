@@ -156,7 +156,7 @@ public class Code02_LinkedListToQueueAndStack {
 
             if (head != null) {
                 ans = head.value;
-                // 原头节点已经没有引用指向它了，所以它就会被JVM的垃圾回收机制给清除掉
+                // 原头节点已经没有引用指向它了，所以它就会被JVM的垃圾回收机制给清除掉。只要是不可达的对象，就会被JVM释放。
                 head = head.next;
                 size--;
             }
