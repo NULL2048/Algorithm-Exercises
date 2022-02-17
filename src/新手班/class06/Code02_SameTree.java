@@ -10,6 +10,8 @@ public class Code02_SameTree {
     }
 
     public static boolean isSameTree(TreeNode p, TreeNode q) {
+        // 下面两个if分支是递归出口，递归的关键点就是找递归出口
+
         // 一个为空，一个不为空，这两个数的结构肯定不同
         if (p == null ^ q == null) {
             return false;
