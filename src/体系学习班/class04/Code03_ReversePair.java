@@ -25,7 +25,9 @@ public class Code03_ReversePair {
     public static int merge(int[] arr, int L, int m, int r) {
         int[] help = new int[r - L + 1];
         int i = help.length - 1;
+        // 左组最右边的数
         int p1 = m;
+        // 右组最右边的数
         int p2 = r;
         int res = 0;
         while (p1 >= L && p2 > m) {
