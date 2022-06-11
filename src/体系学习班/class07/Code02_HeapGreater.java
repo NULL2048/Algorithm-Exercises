@@ -3,6 +3,7 @@ package 体系学习班.class07;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.List;
 
 public class Code02_HeapGreater<T> {
     // 存放堆的数组
@@ -15,7 +16,7 @@ public class Code02_HeapGreater<T> {
     private Comparator<? super T> comp;
 
     // 构造方法，传入比较器
-    public HeapGreater(Comparator<? super T> c) {
+    public Code02_HeapGreater(Comparator<? super T> c) {
         // 初始化成员属性
         heap = new ArrayList<>();
         indexMap = new HashMap<>();
