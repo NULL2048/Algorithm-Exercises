@@ -70,7 +70,7 @@ public class Code02_HeapGreater<T> {
         return ans;
     }
 
-    // 移除堆中指定的对象
+    // 移除堆中指定的对象 O(logN)
     public void remove(T obj) {
         // 将堆数组中最后一个位置的对象与要移除的对象进行位置交换，来代替要移除对象的位置。这个操作有点类似于pop()，只不过这里是能移除任意的对象
         // 获取堆数组最后一个位置的对象
