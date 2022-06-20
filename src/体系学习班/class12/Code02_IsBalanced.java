@@ -32,7 +32,7 @@ public class Code02_IsBalanced {
         return Math.max(leftHeight, rightHeight) + 1;
     }
 
-
+    // 主函数调用方法
     public static boolean isBalanced2(Node head) {
         return process(head).isBalanced;
     }
