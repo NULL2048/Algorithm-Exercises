@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 
-public class Code04_MaxDistance {
+public class Code05_MaxDistance {
     public static class Node {
         public int value;
         public Node left;
