@@ -14,7 +14,7 @@ public class Code05_UnionFind {
         }
     }
 
-
+    // 在Node外面套一层，不影响原有的数据结构
     public static class UnionFind<V> {
         // nodes：样本和样本节点对应表，每一个样本V都对应着它的样本Node节点，他们的关系一一对应存储在HashMap中。在初始化建好以后，这个关系永远不会有改动
         public HashMap<V, Node<V>> nodes;
