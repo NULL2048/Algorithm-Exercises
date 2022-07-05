@@ -2,7 +2,7 @@ package 体系学习班.class16;
 
 import java.util.*;
 
-// 经典拓扑排序
+// 利用入度进行拓扑排序
 public class Code03_TopologySort {
     // directed graph and no loop
     public static List<Node> sortedTopology(Graph graph) {
