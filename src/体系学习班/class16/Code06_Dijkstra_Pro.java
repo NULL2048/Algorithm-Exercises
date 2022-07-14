@@ -59,6 +59,8 @@ public class Code06_Dijkstra_Pro {
                 // 也是向上做堆结构维护，并增加堆中节点数
                 insertHeapify(size++);
             }
+
+            // 如果上面两种情况都不存在，说明这个节点曾经进入过堆中，但是现在已经弹出了，它已经计算结束了，直接忽略即可。
         }
 
         // 弹出堆顶节点
@@ -118,6 +120,7 @@ public class Code06_Dijkstra_Pro {
 
         // 交换数组中两个位置的元素
         private void swap(int index1, int index2) {
+            // 反向索引表也要同步交换
             heapIndexMap.put(nodes[index1], index2);
             heapIndexMap.put(nodes[index2], index1);
             Node tmp = nodes[index1];
@@ -158,5 +161,4 @@ public class Code06_Dijkstra_Pro {
         // 返回结果
         return result;
     }
-
 }
