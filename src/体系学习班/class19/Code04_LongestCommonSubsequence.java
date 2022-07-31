@@ -127,9 +127,12 @@ public class Code04_LongestCommonSubsequence {
         // 根据第四个basecase中的位置依赖关系，对dp进行赋值
         for (int i = 1; i < N; i++) {
             for (int j = 1; j < M; j++) {
+                // 情况c
                 int p1 = dp[i - 1][j];
+                // 情况b
                 int p2 = dp[i][j - 1];
-                int p3 = str1[i] == str2[j] ? (1 + dp[i - 1][j - 1]) : 0;
+                // 情况d   如果两个结尾是相同的，说明两个最长公共子序列就是两个样本长度都减1的最长公共子序列长度+1，如果不相等，说明当前的说明str1和str2长度分别为i和j时对应的最长公共子序列长度和str1和str2长度为i-1和j-1时的一样
+                int p3 = str1[i] == str2[j] ? (1 + dp[i - 1][j - 1]) : dp[i - 1][j - 1];
                 dp[i][j] = Math.max(p1, Math.max(p2, p3));
             }
         }
