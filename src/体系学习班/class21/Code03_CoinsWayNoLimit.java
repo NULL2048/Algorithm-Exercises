@@ -68,9 +68,11 @@ public class Code03_CoinsWayNoLimit {
         for (int index = N - 1; index >= 0; index--) {
             for (int rest = 0; rest <= aim; rest++) {
                 // 利用严格位置依赖关系，找到了消除掉枚举的办法。只需要依赖两个固定的位置即可求出当前的答案
+                // 这个依赖是不选择当前面值时的方案数，也就是rest不变，直接去遍历下一个面值index+1
                 dp[index][rest] = dp[index + 1][rest];
                 // 在依赖另一个位置的时候，也需要判断是不会超过rest的值才能去进行以来
                 if (rest - arr[index] >= 0) {
+                    // 这个依赖是选择当前面值的所有可能张数的全部方案数总和
                     dp[index][rest] += dp[index][rest - arr[index]];
                 }
             }
