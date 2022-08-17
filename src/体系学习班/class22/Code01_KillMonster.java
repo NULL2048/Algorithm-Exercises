@@ -1,4 +1,4 @@
-package 体系学习班.class23;
+package 体系学习班.class22;
 
 public class Code01_KillMonster {
     // 1、暴力递归
