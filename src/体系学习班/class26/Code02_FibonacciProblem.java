@@ -96,8 +96,9 @@ public class Code02_FibonacciProblem {
     }
 
 
-    // 后面是别的例子，只看上面斐波那契数列的即可
-    // 下面这道题是跳台阶问题的解题方法
+    // 后面是别的例子
+    // 下面这道题是跳台阶问题的解题方法，和斐波那契数列差不多
+    // 1、利用递推关系，通过递归求
     public static int s1(int n) {
         if (n < 1) {
             return 0;
@@ -108,6 +109,7 @@ public class Code02_FibonacciProblem {
         return s1(n - 1) + s1(n - 2);
     }
 
+    // 2、利用递推关系，线性求解方法
     public static int s2(int n) {
         if (n < 1) {
             return 0;
@@ -126,6 +128,16 @@ public class Code02_FibonacciProblem {
         return res;
     }
 
+    // 3、利用优化后的方法求
+    /**
+     * 思路：这里先进行推理：
+     * 1.  一个台阶只有一种爬法
+     * 2.  两个台阶有两种爬法
+     * 3.  三个台阶等于先爬到第一个台阶然后直接爬两步到第三级台阶加上先爬到第二个台阶然后直接爬异步到第三级台阶的和
+     *     那就是1+2=3
+     *          ....
+     * n. F(N) = F(N-1)+F(N-2),这就是和斐波那契数列一样的二阶问题
+     */
     public static int s3(int n) {
         if (n < 1) {
             return 0;
