@@ -1,5 +1,7 @@
 package 体系学习班.class27;
 
+import java.util.ArrayList;
+
 public class Code02_TreeEqual {
 
     public static class Node {
