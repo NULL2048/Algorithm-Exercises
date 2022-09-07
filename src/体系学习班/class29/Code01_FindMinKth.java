@@ -136,6 +136,7 @@ public class Code01_FindMinKth {
     // 取得五个一组数中的中位数
     public static int getMedian(int[] arr, int L, int R) {
         // 首先先使用插入排序对这五个数进行排序，因为固定5个数的话，插入排序是效率最高的排序算法。
+        // 因为要排序的数的个数是固定的，那么我们就选择常数时间最好的排序算法即可，插入排序就是常数时间最少的算法（程序语言指令少）
         insertionSort(arr, L, R);
         // 取排序好的中间的那个中位数
         return arr[(L + R) / 2];
