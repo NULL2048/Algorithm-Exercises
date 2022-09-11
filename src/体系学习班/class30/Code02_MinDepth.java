@@ -65,7 +65,7 @@ public class Code02_MinDepth {
             mostRight = cur.left;
             // 如果当前节点存在左树，说明当前节点会被遍历两遍
             if (mostRight != null) {
-                // 记录左树右边界节点的个数
+                // 记录左树右边界节点的个数，从1开始记
                 int rightBoardSize = 1;
 
                 // 持续向右遍历，知道找到左树的最右节点
@@ -111,7 +111,7 @@ public class Code02_MinDepth {
 
 
         // Morris遍历结束后，最后再单独判断一下整棵树的最右节点是不是叶子节点
-        // 记录整棵树最右节点的层数
+        // 记录整棵树最右节点的层数，从1开始记录
         int finalRight = 1;
         // 找到整棵树的最右节点
         cur = head;
@@ -129,4 +129,3 @@ public class Code02_MinDepth {
     }
 
 }
-
