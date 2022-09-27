@@ -188,8 +188,8 @@ public class Code02_TSP {
             int origin = (int) (Math.random() * matrix.length);
             int ans1 = t3(matrix);
             int ans2 = t4(matrix);
-            int ans3 = tsp2(matrix, origin);
-            if (ans1 != ans2 || ans1 != ans3) {
+            //int ans3 = tsp2(matrix, origin);
+            if (ans1 != ans2 ) {
                 System.out.println("fuck");
             }
         }
