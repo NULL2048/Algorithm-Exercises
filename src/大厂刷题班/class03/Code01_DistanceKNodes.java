@@ -2,7 +2,7 @@ package 大厂刷题班.class03;
 
 import java.util.*;
 
-public class Code01_D、istanceKNodes {
+public class Code01_DistanceKNodes {
     public static class Node {
         public int value;
         public Node left;
