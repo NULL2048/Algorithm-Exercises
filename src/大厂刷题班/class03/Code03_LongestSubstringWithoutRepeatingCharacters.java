@@ -1,7 +1,7 @@
 package 大厂刷题班.class03;
 
 // 动态规划 空间压缩
-// 本题测试链接 : https://leetcode.com/problems/longest-substring-without-repeating-characters/
+// 本题测试链接 : https://leetcode.cn/problems/longest-substring-without-repeating-characters/
 public class Code03_LongestSubstringWithoutRepeatingCharacters {
     // 1、暴力递归
     public int lengthOfLongestSubstring1(String s) {
