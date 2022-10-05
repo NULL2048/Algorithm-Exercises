@@ -2,49 +2,49 @@ package 测试;
 
 import java.util.HashMap;
 class Solution {
-    public static int lengthOfLongestSubstring(String s) {
-        if (s == null || s.length() == 0) {
-            return 0;
+    public static int largest1BorderedSquare(int[][] grid) {
+        int n = grid.length;
+        int m = grid[0].length;
+        int[][] downInfo = new int[n + 1][m + 1];
+        int[][] leftInfo = new int[n + 1][m + 1];
+
+        getMInfo(grid, downInfo, leftInfo);
+
+        int maxSize = Integer.MIN_VALUE;
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; m < m; m++) {
+                if (grid[i][j] == 1) {
+                    int size = Math.min(downInfo[i][j], leftInfo[i][j]);
+
+                        maxSize = Math.max(maxSize, size * size);
+                }
+            }
         }
 
-        char[] str = s.toCharArray();
-        int[] preMap = new int[str.length];
-        for (int i = 0; i < str.length; i++) {
-            preMap[i] = -1;
-        }
-
-        int[] temp = new int[256];
-        for (int i = 0; i < 256; i++) {
-            temp[i] = -1;
-        }
-        for (int i = 0; i < str.length; i++) {
-            preMap[i] = temp[str[i]];
-            temp[str[i]] = i;
-        }
-
-        int maxLen = Integer.MIN_VALUE;
-        for (int i = 0; i < str.length; i++) {
-            maxLen = Math.max(maxLen, process(str.length - 1, str, preMap));
-        }
-        return maxLen;
+        return maxSize;
     }
 
-    public static int process(int index, char[] str, int[] preMap) {
-        if (index == 0) {
-            return 1;
+    public static void getMInfo(int[][] grid, int[][] downInfo, int[][] leftInfo) {
+        int n = grid.length;
+        int m = grid[0].length;
+
+        for (int i = n - 1; i >= 0; i--) {
+            for (int j = m - 1; j >= 0; j--) {
+                if (grid[i][j] == 1) {
+                    downInfo[i][j] = downInfo[i + 1][j] + 1;
+                    leftInfo[i][j] = leftInfo[i][j + 1] + 1;
+                } else {
+                    downInfo[i][j] = 0;
+                    leftInfo[i][j] = 0;
+                }
+            }
         }
-
-        int p1 = preMap[index] + 1;
-        int p2 = index - 1 - process(index - 1, str, preMap) + 1;
-
-        return index - Math.max(p1, p2) + 1;
-
     }
 
     public static void main(String[] args) {
-        int[] nums = {1,2,1};
+        int[][] grid = {{1,1,1},{1,0,1},{1,1,1}};
         String str = "abcabcbb";
-        System.out.println(lengthOfLongestSubstring(str));
+        System.out.println(largest1BorderedSquare(grid));
     }
 
 
