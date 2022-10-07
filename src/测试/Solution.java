@@ -1,50 +1,61 @@
 package 测试;
 
 import java.util.HashMap;
+import java.util.TreeSet;
+
 class Solution {
-    public static int largest1BorderedSquare(int[][] grid) {
-        int n = grid.length;
-        int m = grid[0].length;
-        int[][] downInfo = new int[n + 1][m + 1];
-        int[][] leftInfo = new int[n + 1][m + 1];
+    public static int minAbsDifference(int[] nums, int goal) {
+        if (nums == null || nums.length == 0) {
+            return goal;
+        }
+        int n = nums.length;
+        int mid = (n - 1) >> 1;
+        // int[] sumL = new int[2 << mid];
+        // int[] sumR = new int[2 << (mid + 1)];
+        TreeSet<Integer> sumL = new TreeSet<>();
+        TreeSet<Integer> sumR = new TreeSet<>();
 
-        getMInfo(grid, downInfo, leftInfo);
+        process(0, mid, 0, nums, sumL);
+        process(mid + 1, n - 1, 0, nums, sumR);
 
-        int maxSize = Integer.MIN_VALUE;
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; m < m; m++) {
-                if (grid[i][j] == 1) {
-                    int size = Math.min(downInfo[i][j], leftInfo[i][j]);
+        int min = goal;
+        for (Integer l : sumL) {
+            int rest = goal - l;
 
-                        maxSize = Math.max(maxSize, size * size);
-                }
+            Integer r1 = sumR.floor(rest);
+            Integer r2 = sumR.ceiling(rest);
+
+            if (r1 != null) {
+                min = Math.min(min, Math.abs(rest - r1));
+            } else {
+                min = Math.min(min, Math.abs(rest));
+            }
+
+            if (r2 != null) {
+                min = Math.min(min, Math.abs(rest - r2));
+            } else {
+                min = Math.min(min, Math.abs(rest));
             }
         }
 
-        return maxSize;
+        return min;
     }
 
-    public static void getMInfo(int[][] grid, int[][] downInfo, int[][] leftInfo) {
-        int n = grid.length;
-        int m = grid[0].length;
-
-        for (int i = n - 1; i >= 0; i--) {
-            for (int j = m - 1; j >= 0; j--) {
-                if (grid[i][j] == 1) {
-                    downInfo[i][j] = downInfo[i + 1][j] + 1;
-                    leftInfo[i][j] = leftInfo[i][j + 1] + 1;
-                } else {
-                    downInfo[i][j] = 0;
-                    leftInfo[i][j] = 0;
-                }
-            }
+    public static void process(int index, int end, int sum, int[] nums, TreeSet<Integer> arrSum) {
+        if (index == end + 1) {
+            arrSum.add(sum);
+            return;
         }
+
+        process(index + 1, end, sum + nums[index], nums, arrSum);
+        process(index + 1, end, sum, nums, arrSum);
     }
 
     public static void main(String[] args) {
         int[][] grid = {{1,1,1},{1,0,1},{1,1,1}};
+        int[] nums = {7,-9,15,-2};
         String str = "abcabcbb";
-        System.out.println(largest1BorderedSquare(grid));
+        System.out.println(minAbsDifference(nums, -5));
     }
 
 
