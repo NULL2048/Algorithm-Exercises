@@ -19,9 +19,11 @@ public class Code06_MakeNo {
         // base -> 等长偶数达标来
         int[] ans = new int[size];
         int index = 0;
+        // 构造数组的左部分，都是满足原理2的奇数
         for (; index < halfSize; index++) {
             ans[index] = base[index] * 2 - 1;
         }
+        // 构造数组的右部分，都是满足原理1的偶数
         for (int i = 0; index < size; index++, i++) {
             ans[index] = base[i] * 2;
         }
