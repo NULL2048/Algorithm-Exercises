@@ -1,5 +1,8 @@
 package 大厂刷题班.class06;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 // 前缀树  动态规划   数组三连问题
 // 一般数组三连答案假设法都是很难的题，这道题是网易笔试最后一题，当时在牛客上考的，1200个人只有12个人过了
 public class Code04_MostXorZero {
