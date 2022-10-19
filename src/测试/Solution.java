@@ -4,58 +4,76 @@ import java.util.HashMap;
 import java.util.TreeSet;
 
 class Solution {
-    public static int minAbsDifference(int[] nums, int goal) {
-        if (nums == null || nums.length == 0) {
-            return goal;
-        }
-        int n = nums.length;
-        int mid = (n - 1) >> 1;
-        // int[] sumL = new int[2 << mid];
-        // int[] sumR = new int[2 << (mid + 1)];
-        TreeSet<Integer> sumL = new TreeSet<>();
-        TreeSet<Integer> sumR = new TreeSet<>();
+    public static String decodeString(String s) {
+        String[] stack = new String[s.length()];
+        int top = -1;
 
-        process(0, mid, 0, nums, sumL);
-        process(mid + 1, n - 1, 0, nums, sumR);
 
-        int min = goal;
-        for (Integer l : sumL) {
-            int rest = goal - l;
 
-            Integer r1 = sumR.floor(rest);
-            Integer r2 = sumR.ceiling(rest);
+        StringBuilder sb = new StringBuilder();
 
-            if (r1 != null) {
-                min = Math.min(min, Math.abs(rest - r1));
-            } else {
-                min = Math.min(min, Math.abs(rest));
-            }
-
-            if (r2 != null) {
-                min = Math.min(min, Math.abs(rest - r2));
-            } else {
-                min = Math.min(min, Math.abs(rest));
-            }
-        }
-
-        return min;
+//        for (int i = 0; stack[i] != null; i++) {
+//            sb.append(stack[i]);
+//        }
+        sb = process(s, 0, top, stack).str;
+        return sb.toString();
     }
 
-    public static void process(int index, int end, int sum, int[] nums, TreeSet<Integer> arrSum) {
-        if (index == end + 1) {
-            arrSum.add(sum);
-            return;
+    public static class Info {
+        private StringBuilder str;
+        private int end;
+        private int top;
+
+        public Info(StringBuilder str, int end, int top) {
+            this.str = str;
+            this.end = end;
+            this.top = top;
+        }
+    }
+
+    public static Info process(String s, int i, int top, String[] stack) {
+        int cur = 0;
+        StringBuilder sb = new StringBuilder();
+        while (i < s.length() && s.charAt(i) != ']') {
+            if (s.charAt(i) != '[') {
+                if (s.charAt(i) >= '0' && s.charAt(i) <= '9') {
+                    cur = (cur * 10) + (s.charAt(i) - '0');
+                } else {
+                    sb.append(String.valueOf(s.charAt(i)));
+                }
+                i++;
+            } else {
+                Info nextInfo = process(s, i + 1, top, stack);
+                i = nextInfo.end;
+                StringBuilder sbNext = nextInfo.str;
+                top = nextInfo.top;
+                sbNext = printString(cur, sbNext);
+                sb.append(sbNext);
+
+                //stack[++top] = sb.toString();
+
+                //sb.delete(0, sb.length());
+                cur = 0;
+            }
         }
 
-        process(index + 1, end, sum + nums[index], nums, arrSum);
-        process(index + 1, end, sum, nums, arrSum);
+        return new Info(sb, i + 1, top);
+    }
+
+    public static StringBuilder printString(int num, StringBuilder str) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < num; i++) {
+            sb.append(str);
+        }
+        return sb;
     }
 
     public static void main(String[] args) {
         int[][] grid = {{1,1,1},{1,0,1},{1,1,1}};
         int[] nums = {7,-9,15,-2};
-        String str = "abcabcbb";
-        System.out.println(minAbsDifference(nums, -5));
+
+        String str = "100[leetcode]";
+        System.out.println(decodeString(str));
     }
 
 
