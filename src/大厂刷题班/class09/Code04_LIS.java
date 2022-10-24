@@ -2,6 +2,7 @@ package 大厂刷题班.class09;
 
 // 本题测试链接 : https://leetcode.cn/problems/longest-increasing-subsequence
 // 动态规划    辅助数组    二分
+// 这个题就是一个算法模板，直接背，以后如果能用上直接无脑套模板。
 public class Code04_LIS {
 
     public static int lengthOfLIS(int[] arr) {
@@ -25,7 +26,7 @@ public class Code04_LIS {
             // 在ends[l...r]范围上二分
             // 如果 当前数(arr[i]) > ends[m]，砍掉左侧
             // 如果 当前数(arr[i]) <= ends[m]，砍掉右侧
-            // 整个二分就是在ends里寻找 >= 当前数(arr[i])的最左位置（相当于找到ends中递增子序列结尾值小于arr[i]的最大长度的那个子序列）
+            // 整个二分就是在ends里寻找 >= 当前数(arr[i])的最左位置
             // 就是从while里面出来时，l所在的位置。
             // 如果ends中不存在 >= 当前数(arr[i])的情况，将返回有效区的越界位置
             // 也就是从while里面出来时，l所在的位置，是有效区的越界位置
@@ -35,12 +36,18 @@ public class Code04_LIS {
             // 如果当前数为13, 从while里面出来时，l将来到有效区的越界位置，4位置
             while (l <= r) {
                 int m = (l + r) / 2;
+                // ends数组的值也是有序的
                 if (arr[i] > ends[m]) {
                     l = m + 1;
                 } else {
                     r = m - 1;
                 }
             }
+
+            // end数组的值也是由大到小排序好的
+            // 上面这个while循环表面是是找end数组最左边的数值大于envelopesArr[i].length的位置
+            // 但实际就是在找end数组最右边数值不大于envelopesArr[i].length的位置，很好理解。
+
             // 从while里面出来，看l的位置
             // 如果l比right大，说明扩充了有效区，那么right变量要随之变大
             // 如果l不比right大，说明l没有来到有效区的越界位置，right不变
