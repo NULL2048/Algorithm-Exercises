@@ -4,76 +4,58 @@ import java.util.HashMap;
 import java.util.TreeSet;
 
 class Solution {
-    public static String decodeString(String s) {
-        String[] stack = new String[s.length()];
-        int top = -1;
-
-
-
-        StringBuilder sb = new StringBuilder();
-
-//        for (int i = 0; stack[i] != null; i++) {
-//            sb.append(stack[i]);
-//        }
-        sb = process(s, 0, top, stack).str;
-        return sb.toString();
-    }
-
-    public static class Info {
-        private StringBuilder str;
-        private int end;
-        private int top;
-
-        public Info(StringBuilder str, int end, int top) {
-            this.str = str;
-            this.end = end;
-            this.top = top;
+    public static boolean checkInclusion(String s1, String s2) {
+        if (s1 == null || s2 == null || s1.length() > s2.length()) {
+            return false;
         }
-    }
 
-    public static Info process(String s, int i, int top, String[] stack) {
-        int cur = 0;
-        StringBuilder sb = new StringBuilder();
-        while (i < s.length() && s.charAt(i) != ']') {
-            if (s.charAt(i) != '[') {
-                if (s.charAt(i) >= '0' && s.charAt(i) <= '9') {
-                    cur = (cur * 10) + (s.charAt(i) - '0');
-                } else {
-                    sb.append(String.valueOf(s.charAt(i)));
-                }
-                i++;
-            } else {
-                Info nextInfo = process(s, i + 1, top, stack);
-                i = nextInfo.end;
-                StringBuilder sbNext = nextInfo.str;
-                top = nextInfo.top;
-                sbNext = printString(cur, sbNext);
-                sb.append(sbNext);
+        char[] str1 = s2.toCharArray();
+        char[] str2 = s1.toCharArray();
+        int n = str1.length;
+        int m = str2.length;
+        int[] count = new int[256];
+        int all = m;
+        for (int i = 0; i < m; i++) {
+            count[str2[i]]++;
+            all++;
+        }
 
-                //stack[++top] = sb.toString();
 
-                //sb.delete(0, sb.length());
-                cur = 0;
+        int l = 0;
+        int r = 0;
+        for (; r < m; r++) {
+            if (count[str1[r]]-- > 0) {
+                all--;
             }
         }
 
-        return new Info(sb, i + 1, top);
-    }
 
-    public static StringBuilder printString(int num, StringBuilder str) {
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < num; i++) {
-            sb.append(str);
+        for (; r < n; l++, r++) {
+            if (all == 0) {
+                return true;
+            }
+
+            if (count[str1[l]]++ >= 0) {
+                all++;
+            }
+
+            if (count[str1[r]]-- > 0) {
+                all--;
+            }
         }
-        return sb;
+
+
+
+        return all == 0 ? true : false;
     }
 
     public static void main(String[] args) {
         int[][] grid = {{1,1,1},{1,0,1},{1,1,1}};
         int[] nums = {7,-9,15,-2};
 
-        String str = "100[leetcode]";
-        System.out.println(decodeString(str));
+        String str1 = "ab";
+        String str2 = "eidbaooo";
+        System.out.println(checkInclusion(str1, str2));
     }
 
 
