@@ -2,7 +2,7 @@ package 大厂刷题班.class12;
 // 样本对应模型
 // 测试链接 : https://leetcode.cn/problems/regular-expression-matching/
 public class Code04_RegularExpressionMatch {
-    public static boolean isValid(char[] str, char[] exp) {
+    public boolean isValid(char[] str, char[] exp) {
         // str中不能有'.' or '*'
         for (int i = 0; i < str.length; i++) {
             if (str[i] == '.' || str[i] == '*') {
@@ -168,7 +168,7 @@ public class Code04_RegularExpressionMatch {
 
 
     // 4、动态规划版本 + 斜率优化
-    public static boolean isMatch3(String str, String pattern) {
+    public boolean isMatch3(String str, String pattern) {
         if (str == null || pattern == null) {
             return false;
         }
