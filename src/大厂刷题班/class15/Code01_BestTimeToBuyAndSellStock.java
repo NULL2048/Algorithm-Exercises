@@ -1,5 +1,6 @@
 package 大厂刷题班.class15;
 // 测试链接：https://leetcode.cn/problems/best-time-to-buy-and-sell-stock/
+// 【动态规划】【数组】【模拟】
 public class Code01_BestTimeToBuyAndSellStock {
     public int maxProfit(int[] prices) {
         // 过滤无效参数
