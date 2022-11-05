@@ -55,7 +55,7 @@ public class Code01_MorrisTraversal {
                     cur = cur.left;
                     // 跳过本轮循环
                     continue;
-                    // 情况b：如果此时cur左树的最右节点的右指针指向cur，说明是第二次遍历到cur这个节点
+                // 情况b：如果此时cur左树的最右节点的右指针指向cur，说明是第二次遍历到cur这个节点，cur的左子树肯定都已经遍历过了，就不用再遍历它的左子树了，直接cur = cur.right遍历右子树
                 } else {
                     // 将其右指针重新指向Null，还原回以前的样子，然后cur右移
                     mostRight.right = null;
