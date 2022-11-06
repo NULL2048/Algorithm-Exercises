@@ -1,7 +1,8 @@
 package 体系学习班.class24;
 
 import java.util.LinkedList;
-
+// LeetCode上有一道这道题的简单版：https://leetcode.cn/problems/gas-station/
+// 这道题其实比LeetCode上的题要难很多
 public class Code03_GasStation {
     // 这个方法的时间复杂度O(N)，额外空间复杂度O(N)
     public static int canCompleteCircuit(int[] gas, int[] cost) {
