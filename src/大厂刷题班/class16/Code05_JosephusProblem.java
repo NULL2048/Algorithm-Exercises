@@ -21,10 +21,11 @@ public class Code05_JosephusProblem {
         return JosephusProblem(n, m);
     }
     public int JosephusProblem(int n, int m) {
+        // 递归出口，当只剩下1个幸存者的时候，数组中只剩下一个人了，他的下标肯定是0
         if (n == 1) {
             return 0;
         }
-
+        // 根据约瑟夫环问题的公式来进行递归，求出来幸存者在每一轮中所在的下标位置
         return (JosephusProblem(n - 1, m) + m) % n;
     }
 
