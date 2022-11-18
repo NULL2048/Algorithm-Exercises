@@ -175,7 +175,7 @@ public class Code01_LRUCache {
 
 
 
-    // 这个是左神写的版本，基本思路是一样的
+    // 这个是左神写的版本，基本思路是一样的。但是这个版本使用了泛型，可以适配各种数据类型。
     static class  ClassDemo {
         public ClassDemo(int capacity) {
             cache = new MyCache<>(capacity);
