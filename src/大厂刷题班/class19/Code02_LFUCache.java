@@ -24,7 +24,7 @@ public class Code02_LFUCache {
         }
     }
 
-    // 桶结构
+    // 桶结构，桶结构其实就相对简单了，就是提供一个简单的双向链表的基本操作方法即可。比较难的操作其实都是LFUCache类中的方法，桶结构结构类只是起到一个辅助作用
     public static class NodeList {
         // 桶的头节点
         public Node head;
@@ -105,6 +105,8 @@ public class Code02_LFUCache {
         heads = new HashMap<>();
         headList = null;
     }
+
+    // 最重要也是最难点的方法就是modifyHeadList和move，这也是明显和LRU不同的地方
 
     // 这个方法是伴随着删除Node节点操作的
     // 这个函数的功能是，判断刚刚减少了一个节点的桶是不是已经空了，如果空了，需要去做桶链表的删除节点的操作。记住删除桶节点的操作一定是和删除桶内部节点操作绑定在一起的，删除了桶内部节点之后不一定会触发删除桶节点操作，但是如果没有删除桶内部节点，就一定不会有删除桶节点的操作。
