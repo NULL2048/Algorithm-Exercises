@@ -82,7 +82,7 @@ public class Code05_UnionFind {
                 Node<V> big = aSetSize >= bSetSize ? aHead : bHead;
                 Node<V> small = big == aHead ? bHead : aHead;
                 // 将小的代表节点挂到大的代表节点下面，也就是将小的代表节点的代表节点指向大的代表节点
-                // 这么做是为了降低在向上便利查找的时候，路径遍地更短，因为小的代表节点意味着它下面的节点更少，路径也就更多，这样就提高了并查集的效率
+                // 这么做是为了降低在向上遍历查找代表节点的时候，路径遍历更短，因为小的代表节点意味着它下面的节点更少，路径也就更短，这样就减少了在空间压缩时需要遍历一遍来重新赋值代表节点的节点数，这样就提高了并查集的效率
                 parents.put(small, big);
                 // 更新大的代表节点所代表的样本数量
                 sizeMap.put(big, aSetSize + bSetSize);
