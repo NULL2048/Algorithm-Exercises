@@ -5,65 +5,93 @@ import java.util.HashMap;
 import java.util.TreeSet;
 
 class Solution {
-    public static int cherryPickup(int[][] grid) {
-        int n = grid.length;
-        int m = grid.length;
+    public static int[] maxSumOfThreeSubarrays(int[] nums, int k) {
+        int n = nums.length;
+        int[] left = new int[n];
+        int[] leftStartIndex = new int[n];
+        int[] right = new int[n];
+        int[] rightStartIndex = new int[n];
 
-        return process(0, 0, 0, 0, grid, n, m);
-    }
-
-    public static int process(int ai, int aj, int bi, int bj, int[][] grid, int n, int m) {
-        if (ai >= n || bi >= n || aj >= m || bj >= m) {
-            return Integer.MIN_VALUE;
+        int sum = 0;
+        for (int i = 0; i < k; i++) {
+            sum += nums[i];
         }
+        left[k - 1] = sum;
+        leftStartIndex[k - 1] = 0;
 
-        if (ai == n - 1 && aj == m - 1) {
-            return grid[ai][aj];
-        }
-
-        int p1 = process(ai + 1, aj, bi + 1, bj, grid, n, m);
-        int p2 = process(ai, aj + 1, bi, bj + 1, grid, n, m);
-        int p3 = process(ai + 1, aj, bi, bj + 1, grid, n, m);
-        int p4 = process(ai, aj + 1, bi + 1, bj, grid, n, m);
-
-
-        int next = Math.max(p1, Math.max(p2, Math.max(p3, p4)));
-
-        int cur = 0;
-        if (grid[ai][aj] == -1 || grid[bi][bj] == -1 || next == -1) {
-            return -1;
-        } else {
-//            if (ai == bi) {
-//                cur = grid[ai][aj];
-//            } else {
-//                cur = grid[ai][aj] + grid[bi][bj];
-//            }
-
-            if (ai != bi || aj != bj) {
-                cur = grid[ai][aj] + grid[bi][bj];
+        for (int i = k; i < n; i++) {
+            sum = sum - nums[i - k] + nums[i];
+            if (left[i - 1] >= sum) {
+                left[i] = left[i - 1];
+                leftStartIndex[i] = leftStartIndex[i - 1];
             } else {
-                cur = grid[ai][aj];
+                left[i] = sum;
+                leftStartIndex[i] = i - k + 1;
             }
         }
 
-        return cur + next;
+        sum = 0;
+        for (int i = n - 1; i >= n - k; i--) {
+            sum += nums[i];
+        }
+        //right[n - 1 - k + 1]
+        right[n - k] = sum;
+        leftStartIndex[n - k] = n - k;
+
+        for (int i = n - k - 1; i >= 0; i--) {
+            sum = sum - nums[i + k] + nums[i];
+            if (right[i + 1] > sum) {
+                right[i] = right[i + 1];
+                rightStartIndex[i] = rightStartIndex[i + 1];
+            } else {
+                right[i] = sum;
+                rightStartIndex[i] = i;
+            }
+        }
+
+        sum = 0;
+        for (int i = k - 1; i < 2 * k - 1; i++) {
+            sum += nums[i];
+        }
+        int max = Integer.MIN_VALUE;
+        int[] ans = new int[3];
+        int ansSum;
+        int limit =  n - 2 * k;
+        for (int l = k; l <= limit; l++) {
+            int r = l + k - 1;
+            sum = sum - nums[l - 1] + nums[r];
+            ansSum = left[l - 1] + sum + right[r + 1];
+            if (max < ansSum) {
+                max = ansSum;
+                ans[0] = leftStartIndex[l - 1];
+                ans[1] = l;
+                ans[2] = rightStartIndex[r + 1];
+            }
+        }
+
+        return ans;
     }
 
     public static void main(String[] args) {
 
         int[][] grid = {{1, 1, -1}, {1, -1, 1}, {-1, 1, 1}};
-        int[] nums = {1,4,3,4,1,2,1,3,1,3,2,3,3};
+        int[] nums = {7,13,20,19,19,2,10,1,1,19};
         int[] nums2 = {2, 5, 6};
-        int n = 13;
+        int n = 3;
 
-        Arrays.sort(nums);
-        for (int num : nums) {
-            System.out.print(num + " ");
-        }
+//        Arrays.sort(nums);
+//        for (int num : nums) {
+//            System.out.print(num + " ");
+//        }
         //System.out.println(nums);
 
-//        String str1 = "yezruvnatuipjeohsymapyxgfeczkevoxipckunlqjauvllfpwezhlzpbkfqazhexabomnlxkmoufneninbxxguuktvupmpfspwxiouwlfalexmluwcsbeqrzkivrphtpcoxqsueuxsalopbsgkzaibkpfmsztkwommkvgjjdvvggnvtlwrllcafhfocprnrzfoyehqhrvhpbbpxpsvomdpmksojckgkgkycoynbldkbnrlujegxotgmeyknpmpgajbgwmfftuphfzrywarqkpkfnwtzgdkdcyvwkqawwyjuskpvqomfchnlojmeltlwvqomucipcwxkgsktjxpwhujaexhejeflpctmjpuguslmzvpykbldcbxqnwgycpfccgeychkxfopixijeypzyryglutxweffyrqtkfrqlhtjweodttchnugybsmacpgperznunffrdavyqgilqlplebbkdopyyxcoamfxhpmdyrtutfxsejkwiyvdwggyhgsdpfxpznrccwdupfzlubkhppmasdbqfzttbhfismeamenyukzqoupbzxashwuvfkmkosgevcjnlpfgxgzumktsexvwhylhiupwfwyxotwnxodttsrifgzkkedurayjgxlhxjzlxikcgerptpufocymfrkyayvklsalgmtifpiczwnozmgowzchjiop";
-//        String str2 = "rabbit";
-//        System.out.println(cherryPickup(grid));
+        String str1 = "yezruvnatuipjeohsymapyxgfeczkevoxipckunlqjauvllfpwezhlzpbkfqazhexabomnlxkmoufneninbxxguuktvupmpfspwxiouwlfalexmluwcsbeqrzkivrphtpcoxqsueuxsalopbsgkzaibkpfmsztkwommkvgjjdvvggnvtlwrllcafhfocprnrzfoyehqhrvhpbbpxpsvomdpmksojckgkgkycoynbldkbnrlujegxotgmeyknpmpgajbgwmfftuphfzrywarqkpkfnwtzgdkdcyvwkqawwyjuskpvqomfchnlojmeltlwvqomucipcwxkgsktjxpwhujaexhejeflpctmjpuguslmzvpykbldcbxqnwgycpfccgeychkxfopixijeypzyryglutxweffyrqtkfrqlhtjweodttchnugybsmacpgperznunffrdavyqgilqlplebbkdopyyxcoamfxhpmdyrtutfxsejkwiyvdwggyhgsdpfxpznrccwdupfzlubkhppmasdbqfzttbhfismeamenyukzqoupbzxashwuvfkmkosgevcjnlpfgxgzumktsexvwhylhiupwfwyxotwnxodttsrifgzkkedurayjgxlhxjzlxikcgerptpufocymfrkyayvklsalgmtifpiczwnozmgowzchjiop";
+        String str2 = "rabbit";
+        //System.out.println(cherryPickup(grid));
+
+        int[] ans = maxSumOfThreeSubarrays(nums, n);
+        for (int a : ans) {
+            System.out.print(a + " ");
+        }
     }
 }
