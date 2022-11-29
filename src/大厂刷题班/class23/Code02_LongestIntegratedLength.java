@@ -7,7 +7,7 @@ import java.util.HashSet;
 // 数组   将题目中复杂的限定条件转化为自己理解的简单的限定条件
 // 和Code01_MaxABSBetweenLeftAndRight是一种类型的题
 public class Code02_LongestIntegratedLength {
-    // 这道题难的是思路，思路想出来了，代码实现起来很简单，所以就不写注释了，代码一看就懂
+    // 这道题难的是思路，思路想出来了，代码实现起来很简单，所以就不写注释了，代码一看就懂。
 
     // 最优解   上课讲的版本，看这个版本就行了，和笔记中的方法一致
     public static int maxLen(int[] arr) {
