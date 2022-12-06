@@ -6,35 +6,72 @@ import java.util.Map;
 import java.util.TreeSet;
 
 class Solution {
-    public static int tallestBillboard(int[] rods) {
-        if (rods == null || rods.length == 0) {
-            return 0;
+    public static String minWindow(String sStr, String tStr) {
+        if (sStr == null || sStr.length() == 0 || tStr == null || tStr.length() == 0) {
+            return "";
         }
-        int n = rods.length;
-        HashMap<Integer, Integer> dp = new HashMap<>();
-        dp.put(0, 0);
-        for (int i = 0; i < n; i++) {
-            for (Map.Entry<Integer, Integer> entry : dp.entrySet()) {
-                int sum1 = entry.getValue() + entry.getKey();
-                int sum2 = entry.getValue();
 
-                int newSum = rods[i] + sum1;
-                int newKey = newSum - sum2;
-                int value = dp.getOrDefault(newKey, 0);
-                if ((value != 0 && sum2 > value) || value == 0) {
-                    dp.put(newKey, sum2);
+        char[] s = sStr.toCharArray();
+        char[] t = tStr.toCharArray();
+
+        int[] map = new int['z' + 1];
+        int all = 0;
+        for (int i = 0; i < t.length; i++) {
+            map[t[i]]++;
+            all++;
+        }
+
+        int r = 0;
+        int ansL = -1;
+        int ansR = -1;
+        int minLen = Integer.MAX_VALUE;
+
+        map[s[0]]--;
+        if (map[s[0]] >= 0) {
+            all--;
+        }
+        for (int l = 0; l < s.length; l++) {
+            while (l <= r && r < s.length) {
+                if (all == 0) {
+                    if (minLen > r - l + 1) {
+                        ansL = l;
+                        ansR = r;
+                        minLen = ansR - ansL + 1;
+                        break;
+                    }
+                }
+                r++;
+                if (r < s.length) {
+                    map[s[r]]--;
+                    if (map[s[r]] >= 0) {
+                        all--;
+                    }
                 }
 
-                newSum = rods[i] + sum2;
-                newKey = Math.abs(sum1 - newSum);
-                value = dp.getOrDefault(newKey, 0);
-                if ((value != 0 && Math.min(sum1, newSum) > value) || value == 0) {
-                    dp.put(newKey, Math.min(sum1, newSum));
-                }
             }
+
+            map[s[l]]++;
+            if (map[s[l]] > 0) {
+                all++;
+            }
+
+//            if (all == 0) {
+//                if (minLen > r - l + 1) {
+//                    ansL = l;
+//                    ansR = r;
+//                    minLen = ansR - ansL + 1;
+//
+//                    map[s[l]]++;
+//                    if (map[s[l]] > 0) {
+//                        all++;
+//                    }
+//                    continue;
+//                }
+//            }
+
         }
 
-        return dp.get(0);
+        return minLen == -1 ? "" : sStr.substring(ansL, ansR + 1);
     }
 
     public static void main(String[] args) {
@@ -50,9 +87,11 @@ class Solution {
 //        }
         //System.out.println(nums);
 
-        String str1 = "yezruvnatuipjeohsymapyxgfeczkevoxipckunlqjauvllfpwezhlzpbkfqazhexabomnlxkmoufneninbxxguuktvupmpfspwxiouwlfalexmluwcsbeqrzkivrphtpcoxqsueuxsalopbsgkzaibkpfmsztkwommkvgjjdvvggnvtlwrllcafhfocprnrzfoyehqhrvhpbbpxpsvomdpmksojckgkgkycoynbldkbnrlujegxotgmeyknpmpgajbgwmfftuphfzrywarqkpkfnwtzgdkdcyvwkqawwyjuskpvqomfchnlojmeltlwvqomucipcwxkgsktjxpwhujaexhejeflpctmjpuguslmzvpykbldcbxqnwgycpfccgeychkxfopixijeypzyryglutxweffyrqtkfrqlhtjweodttchnugybsmacpgperznunffrdavyqgilqlplebbkdopyyxcoamfxhpmdyrtutfxsejkwiyvdwggyhgsdpfxpznrccwdupfzlubkhppmasdbqfzttbhfismeamenyukzqoupbzxashwuvfkmkosgevcjnlpfgxgzumktsexvwhylhiupwfwyxotwnxodttsrifgzkkedurayjgxlhxjzlxikcgerptpufocymfrkyayvklsalgmtifpiczwnozmgowzchjiop";
-        String str2 = "rabbit";
-        System.out.println(tallestBillboard(nums2));
+//        "ADOBECODEBANC"
+//        "ABC"
+        String str1 = "ADOBECODEBANC";
+        String str2 = "ABC";
+        System.out.println(minWindow(str1, str2));
 
 //        int[] ans = maxSumOfThreeSubarrays(nums, n);
 //        for (int a : ans) {
