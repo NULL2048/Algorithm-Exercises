@@ -31,14 +31,16 @@ class Solution {
             all--;
         }
         for (int l = 0; l < s.length; l++) {
-            while (l <= r && r < s.length) {
+
+            while (r < s.length) {
                 if (all == 0) {
                     if (minLen > r - l + 1) {
                         ansL = l;
                         ansR = r;
                         minLen = ansR - ansL + 1;
-                        break;
+
                     }
+                    break;
                 }
                 r++;
                 if (r < s.length) {
@@ -71,7 +73,7 @@ class Solution {
 
         }
 
-        return minLen == -1 ? "" : sStr.substring(ansL, ansR + 1);
+        return minLen == Integer.MAX_VALUE ? "" : sStr.substring(ansL, ansR + 1);
     }
 
     public static void main(String[] args) {
@@ -89,8 +91,8 @@ class Solution {
 
 //        "ADOBECODEBANC"
 //        "ABC"
-        String str1 = "ADOBECODEBANC";
-        String str2 = "ABC";
+        String str1 = "a";
+        String str2 = "aa";
         System.out.println(minWindow(str1, str2));
 
 //        int[] ans = maxSumOfThreeSubarrays(nums, n);
