@@ -6,74 +6,88 @@ import java.util.Map;
 import java.util.TreeSet;
 
 class Solution {
-    public static String minWindow(String sStr, String tStr) {
-        if (sStr == null || sStr.length() == 0 || tStr == null || tStr.length() == 0) {
+    public static String removeDuplicateLetters1(String str) {
+        if (str == null || str.length() < 2) {
+            return str;
+        }
+        int[] map = new int[256];
+        for (int i = 0; i < str.length(); i++) {
+            map[str.charAt(i)]++;
+        }
+        int minACSIndex = 0;
+        for (int i = 0; i < str.length(); i++) {
+            minACSIndex = str.charAt(minACSIndex) > str.charAt(i) ? i : minACSIndex;
+            if (--map[str.charAt(i)] == 0) {
+                break;
+            }
+        }
+        // 0...break(之前) minACSIndex
+        // str[minACSIndex] 剩下的字符串str[minACSIndex+1...] -> 去掉str[minACSIndex]字符 -> s'
+        // s'...
+        return String.valueOf(str.charAt(minACSIndex)) + removeDuplicateLetters1(
+                str.substring(minACSIndex + 1).replaceAll(String.valueOf(str.charAt(minACSIndex)), ""));
+    }
+
+
+    public static String removeDuplicateLetters(String str) {
+        if (str == null || str.length() == 0) {
             return "";
         }
 
-        char[] s = sStr.toCharArray();
-        char[] t = tStr.toCharArray();
-
-        int[] map = new int['z' + 1];
-        int all = 0;
-        for (int i = 0; i < t.length; i++) {
-            map[t[i]]++;
-            all++;
+        if (str.length() == 1) {
+            return str;
         }
 
+        if (str.length() == 2) {
+            return str.charAt(0) == str.charAt(1) ? str.substring(0, 1) : str;
+        }
+
+        char[] s = str.toCharArray();
+        int[] map = new int[26];
+        for (int i = 0; i < s.length; i++) {
+            map[s[i] - 'a']++;
+        }
+
+        int l = 0;
         int r = 0;
-        int ansL = -1;
-        int ansR = -1;
-        int minLen = Integer.MAX_VALUE;
+        boolean[] isAdd = new boolean[26];
+        boolean[] isVisited = new boolean[s.length];
 
-        map[s[0]]--;
-        if (map[s[0]] >= 0) {
-            all--;
-        }
-        for (int l = 0; l < s.length; l++) {
-
-            while (r < s.length) {
-                if (all == 0) {
-                    if (minLen > r - l + 1) {
-                        ansL = l;
-                        ansR = r;
-                        minLen = ansR - ansL + 1;
-
-                    }
-                    break;
-                }
+        StringBuilder sb = new StringBuilder();
+        while (r < s.length) {
+            if (!isVisited[r] && ((map[s[r] - 'a'] == -1 || --map[s[r] - 'a'] > 0))) {
+                isVisited[r] = true;
                 r++;
-                if (r < s.length) {
-                    map[s[r]]--;
-                    if (map[s[r]] >= 0) {
-                        all--;
+            } else if (isVisited[r] && map[s[r] - 'a'] > 0) {
+                isVisited[r] = true;
+                r++;
+            } else {
+                isVisited[r] = true;
+
+                int minCharacterIndex = -1;
+                for (int i = l; i <= r; i++) {
+                    if (map[s[i] - 'a'] != -1 && (minCharacterIndex == -1 || s[minCharacterIndex] > s[i])) {
+                        minCharacterIndex = i;
                     }
+
                 }
 
+                sb.append(s[minCharacterIndex]);
+
+                // for (int i = minCharacterIndex + 1; i <= r; i++) {
+                //     if (map[s[i] - 'a'] != -1) {
+                //         map[s[i] - 'a']++;
+                //     }
+                // }
+
+                map[s[minCharacterIndex] - 'a'] = -1;
+                l = minCharacterIndex + 1;
+                r = l;
+
             }
-
-            map[s[l]]++;
-            if (map[s[l]] > 0) {
-                all++;
-            }
-
-//            if (all == 0) {
-//                if (minLen > r - l + 1) {
-//                    ansL = l;
-//                    ansR = r;
-//                    minLen = ansR - ansL + 1;
-//
-//                    map[s[l]]++;
-//                    if (map[s[l]] > 0) {
-//                        all++;
-//                    }
-//                    continue;
-//                }
-//            }
-
         }
 
-        return minLen == Integer.MAX_VALUE ? "" : sStr.substring(ansL, ansR + 1);
+        return sb.toString();
     }
 
     public static void main(String[] args) {
@@ -91,9 +105,11 @@ class Solution {
 
 //        "ADOBECODEBANC"
 //        "ABC"
-        String str1 = "a";
+        String str1 = "rusrbofeggbbkyuyjsrzornpdguwzizqszpbicdquakqws";
         String str2 = "aa";
-        System.out.println(minWindow(str1, str2));
+        System.out.println(removeDuplicateLetters(str1));
+        System.out.println("hesitxyplovdqfkz");
+        System.out.println("hesitxyplovdqfkz".equals(removeDuplicateLetters(str1)));
 
 //        int[] ans = maxSumOfThreeSubarrays(nums, n);
 //        for (int a : ans) {
