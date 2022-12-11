@@ -6,93 +6,81 @@ import java.util.Map;
 import java.util.TreeSet;
 
 class Solution {
-    public static String removeDuplicateLetters1(String str) {
-        if (str == null || str.length() < 2) {
-            return str;
-        }
-        int[] map = new int[256];
-        for (int i = 0; i < str.length(); i++) {
-            map[str.charAt(i)]++;
-        }
-        int minACSIndex = 0;
-        for (int i = 0; i < str.length(); i++) {
-            minACSIndex = str.charAt(minACSIndex) > str.charAt(i) ? i : minACSIndex;
-            if (--map[str.charAt(i)] == 0) {
-                break;
+    public static int maxPoints(int[][] points) {
+        int n = points.length;
+        int max = 1;
+        for (int i = 0; i < n - 1; i++) {
+            int cnt1 = 1;
+            int cnt2 = 1;
+            int cnt3 = 1;
+            int cnt4 = 1;
+            int cnt = 0;
+            int molecule;
+            int denominator;
+            int gcd;
+
+            int x = points[i][0];
+            int y = points[i][1];
+            if (y != 0) {
+                gcd = Math.abs(gcd(x, y));
+                x /= gcd;
+                y /= gcd;
             }
+            HashMap<Integer, HashMap<Integer, Integer>> fractionMap = new HashMap<>();
+            for (int j = i + 1; j < n; j++) {
+                if (x == points[j][0] && y == points[j][1]) {
+                    cnt1++;
+                    cnt = Math.max(cnt, cnt1);
+                } else if (x == points[j][0]) {
+                    cnt2++;
+                    cnt = Math.max(cnt, cnt2);
+                } else if (y == points[j][1]) {
+                    cnt3++;
+                    cnt = Math.max(cnt, cnt3);
+                } else {
+                    molecule = x - points[j][0];
+                    denominator = y - points[j][1];
+                    gcd = Math.abs(gcd(molecule, denominator));
+                    molecule = molecule / gcd;
+                    denominator = denominator / gcd;
+                    cnt4 = add(molecule, denominator, fractionMap);
+                    cnt = Math.max(cnt, cnt4);
+                }
+            }
+
+            max = Math.max(max, cnt);
         }
-        // 0...break(之前) minACSIndex
-        // str[minACSIndex] 剩下的字符串str[minACSIndex+1...] -> 去掉str[minACSIndex]字符 -> s'
-        // s'...
-        return String.valueOf(str.charAt(minACSIndex)) + removeDuplicateLetters1(
-                str.substring(minACSIndex + 1).replaceAll(String.valueOf(str.charAt(minACSIndex)), ""));
+
+
+        return max;
     }
 
-
-    public static String removeDuplicateLetters(String str) {
-        if (str == null || str.length() == 0) {
-            return "";
+    public static int gcd(int a, int b) {
+        int c = a % b;
+        if (c == 0) {
+            return b;
+        } else {
+            return gcd(b, c);
         }
+    }
 
-        if (str.length() == 1) {
-            return str;
+    public static int add(int x, int y, HashMap<Integer, HashMap<Integer, Integer>> fractionMap) {
+        if (fractionMap.containsKey(x) && fractionMap.get(x).containsKey(y)) {
+            HashMap<Integer, Integer> map = fractionMap.get(x);
+            int cnt = map.get(y);
+            map.put(y, cnt + 1);
+            fractionMap.put(x, map);
+            return cnt + 1;
+        } else {
+            HashMap<Integer, Integer> map = new HashMap<>();
+            map.put(y, 2);
+            fractionMap.put(x, map);
+            return 2;
         }
-
-        if (str.length() == 2) {
-            return str.charAt(0) == str.charAt(1) ? str.substring(0, 1) : str;
-        }
-
-        char[] s = str.toCharArray();
-        int[] map = new int[26];
-        for (int i = 0; i < s.length; i++) {
-            map[s[i] - 'a']++;
-        }
-
-        int l = 0;
-        int r = 0;
-        boolean[] isAdd = new boolean[26];
-        boolean[] isVisited = new boolean[s.length];
-
-        StringBuilder sb = new StringBuilder();
-        while (r < s.length) {
-            if (!isVisited[r] && ((map[s[r] - 'a'] == -1 || --map[s[r] - 'a'] > 0))) {
-                isVisited[r] = true;
-                r++;
-            } else if (isVisited[r] && map[s[r] - 'a'] > 0) {
-                isVisited[r] = true;
-                r++;
-            } else {
-                isVisited[r] = true;
-
-                int minCharacterIndex = -1;
-                for (int i = l; i <= r; i++) {
-                    if (map[s[i] - 'a'] != -1 && (minCharacterIndex == -1 || s[minCharacterIndex] > s[i])) {
-                        minCharacterIndex = i;
-                    }
-
-                }
-
-                sb.append(s[minCharacterIndex]);
-
-                // for (int i = minCharacterIndex + 1; i <= r; i++) {
-                //     if (map[s[i] - 'a'] != -1) {
-                //         map[s[i] - 'a']++;
-                //     }
-                // }
-
-                map[s[minCharacterIndex] - 'a'] = -1;
-                l = minCharacterIndex + 1;
-                r = l;
-
-            }
-        }
-
-        return sb.toString();
     }
 
     public static void main(String[] args) {
-
-        int[][] grid = {{1, 1, -1}, {1, -1, 1}, {-1, 1, 1}};
+        int[][] grid = {{1,1},{3,2},{5,3},{4,1},{2,3},{1,4}};
         int[] nums = {7,13,20,19,19,2,10,1,1,19};
         int[] nums2 = {1,2,3,6};
         int n = 3;
@@ -107,9 +95,9 @@ class Solution {
 //        "ABC"
         String str1 = "rusrbofeggbbkyuyjsrzornpdguwzizqszpbicdquakqws";
         String str2 = "aa";
-        System.out.println(removeDuplicateLetters(str1));
-        System.out.println("hesitxyplovdqfkz");
-        System.out.println("hesitxyplovdqfkz".equals(removeDuplicateLetters(str1)));
+        System.out.println(maxPoints(grid));
+//        System.out.println("hesitxyplovdqfkz");
+//        System.out.println("hesitxyplovdqfkz".equals(removeDuplicateLetters(str1)));
 
 //        int[] ans = maxSumOfThreeSubarrays(nums, n);
 //        for (int a : ans) {
