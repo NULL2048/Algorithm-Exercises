@@ -1,82 +1,106 @@
 package 测试;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.TreeSet;
+import java.util.*;
 
 class Solution {
-    public static int maxPoints(int[][] points) {
-        int n = points.length;
-        int max = 1;
-        for (int i = 0; i < n - 1; i++) {
-            int cnt1 = 1;
-            int cnt2 = 1;
-            int cnt3 = 1;
-            int cnt4 = 1;
-            int cnt = 0;
-            int molecule;
-            int denominator;
-            int gcd;
+    public static List<List<String>> findLadders(String beginWord, String endWord, List<String> wordList) {
+        wordList.add(beginWord);
+        HashSet<String> wordSet = new HashSet(wordList);
+        HashMap<String, List<String>> neighborMap = getNeighborMap(wordSet, beginWord);
+        HashMap<String, Integer> distanceMap = getDistanceMap(beginWord, neighborMap);
 
-            int x = points[i][0];
-            int y = points[i][1];
-            if (y != 0) {
-                gcd = Math.abs(gcd(x, y));
-                x /= gcd;
-                y /= gcd;
+        HashMap<String, Integer> distanceMap2 = getDistanceMap(endWord, neighborMap);
+
+        LinkedList<String> path = new LinkedList<>();
+        List<List<String>> ans = new ArrayList<>();
+        getShortestPath(beginWord, endWord, neighborMap, distanceMap, path, ans, 0, distanceMap2);
+
+        return ans;
+    }
+
+    public static HashMap<String, List<String>> getNeighborMap(HashSet<String> wordSet, String beginWord) {
+        HashMap<String, List<String>> neighborMap = new HashMap<>();
+
+        //neighborMap.put(beginWord, getNexts(beginWord, wordSet));
+        for (String word : wordSet) {
+            neighborMap.put(word, getNexts(word, wordSet));
+        }
+
+        return neighborMap;
+    }
+
+    public static List<String> getNexts(String word, HashSet<String> wordSet) {
+        List<String> nexts = new ArrayList<String>();
+        char[] w = word.toCharArray();
+
+        for (int i = 0; i < w.length; i++) {
+            for (char cha = 'a'; cha <= 'z'; cha++) {
+                if (cha != w[i]) {
+                    char temp = w[i];
+                    w[i] = cha;
+
+                    if (wordSet.contains(String.valueOf(w))) {
+                        nexts.add(String.valueOf(w));
+                    }
+
+                    w[i] = temp;
+                }
+
             }
-            HashMap<Integer, HashMap<Integer, Integer>> fractionMap = new HashMap<>();
-            for (int j = i + 1; j < n; j++) {
-                if (x == points[j][0] && y == points[j][1]) {
-                    cnt1++;
-                    cnt = Math.max(cnt, cnt1);
-                } else if (x == points[j][0]) {
-                    cnt2++;
-                    cnt = Math.max(cnt, cnt2);
-                } else if (y == points[j][1]) {
-                    cnt3++;
-                    cnt = Math.max(cnt, cnt3);
-                } else {
-                    molecule = x - points[j][0];
-                    denominator = y - points[j][1];
-                    gcd = Math.abs(gcd(molecule, denominator));
-                    molecule = molecule / gcd;
-                    denominator = denominator / gcd;
-                    cnt4 = add(molecule, denominator, fractionMap);
-                    cnt = Math.max(cnt, cnt4);
+        }
+
+        return nexts;
+    }
+
+    public static HashMap<String, Integer> getDistanceMap(String beginWord, HashMap<String, List<String>> neighborMap) {
+        Queue<String> queue = new LinkedList<>();
+        queue.add(beginWord);
+
+        HashMap<String, Integer> distanceMap = new HashMap<>();
+        distanceMap.put(beginWord, 0);
+
+        HashSet<String> set = new HashSet<>();
+        set.add(beginWord);
+        while (!queue.isEmpty()) {
+            String temp = queue.poll();
+            //if (neighborMap.containsKey(temp)) {
+            for (String next : neighborMap.get(temp)) {
+                if (!set.contains(next)) {
+                    distanceMap.put(next, distanceMap.get(temp) + 1);
+                    queue.add(next);
+                    set.add(next);
+                }
+
+            }
+            //}
+
+        }
+
+        return distanceMap;
+    }
+
+
+    public static void getShortestPath(String nowWord, String endWord, HashMap<String, List<String>> neighborMap, HashMap<String, Integer> distanceMap, LinkedList<String> path, List<List<String>> ans, int nowDistance, HashMap<String, Integer> distanceMap2) {
+        // if (nowWord == null) {
+        //     return;
+        // }
+
+        path.add(nowWord);
+
+        if (nowWord.equals(endWord)) {
+            // 不能直接将path加入，要单独创建一个地址空间加入到ans中，因为path的地址在所有的递归层中是共用的，在后面的递归中可能会改变path中的值，如果直接将path加入到ans中，就会导致ans中的内容会随着递归操作一起变化
+            ans.add(new LinkedList<String>(path));
+        } else {
+            for (String next : neighborMap.get(nowWord)) {
+                if (distanceMap.get(next) == distanceMap.get(nowWord) + 1 &&
+                        distanceMap2.get(next) == distanceMap2.get(nowWord) - 1) {
+                    getShortestPath(next, endWord, neighborMap, distanceMap, path, ans, nowDistance + 1, distanceMap2);
                 }
             }
-
-            max = Math.max(max, cnt);
         }
 
 
-        return max;
-    }
-
-    public static int gcd(int a, int b) {
-        int c = a % b;
-        if (c == 0) {
-            return b;
-        } else {
-            return gcd(b, c);
-        }
-    }
-
-    public static int add(int x, int y, HashMap<Integer, HashMap<Integer, Integer>> fractionMap) {
-        if (fractionMap.containsKey(x) && fractionMap.get(x).containsKey(y)) {
-            HashMap<Integer, Integer> map = fractionMap.get(x);
-            int cnt = map.get(y);
-            map.put(y, cnt + 1);
-            fractionMap.put(x, map);
-            return cnt + 1;
-        } else {
-            HashMap<Integer, Integer> map = new HashMap<>();
-            map.put(y, 2);
-            fractionMap.put(x, map);
-            return 2;
-        }
+        path.pollLast();
     }
 
     public static void main(String[] args) {
@@ -93,9 +117,17 @@ class Solution {
 
 //        "ADOBECODEBANC"
 //        "ABC"
-        String str1 = "rusrbofeggbbkyuyjsrzornpdguwzizqszpbicdquakqws";
-        String str2 = "aa";
-        System.out.println(maxPoints(grid));
+
+        String str1 = "hit";
+        String str2 = "cog";
+        String[] strs = {"hot","dot","dog","lot","log"};
+        List<String> strList = new ArrayList<String>();
+        for (String s : strs) {
+            strList.add(s);
+        }
+
+        System.out.println(findLadders(str1, str2, strList));
+
 //        System.out.println("hesitxyplovdqfkz");
 //        System.out.println("hesitxyplovdqfkz".equals(removeDuplicateLetters(str1)));
 
