@@ -1,5 +1,6 @@
 package 体系学习班.class28;
-
+// 力扣有一道题是要找一个字符串中最长回文子串是什么，下面的代码是返回最长回文子串的长度。可以直接在下面代码的基础上稍微修改一下就可以作为力扣这道题的解
+// 测试链接：https://leetcode.cn/problems/longest-palindromic-substring/
 public class Code01_Manacher {
     // Manacher算法主流程
     public static int manacher(String s) {
