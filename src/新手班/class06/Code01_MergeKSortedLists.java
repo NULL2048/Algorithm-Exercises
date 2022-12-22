@@ -2,7 +2,7 @@ package 新手班.class06;
 
 import java.util.Comparator;
 import java.util.PriorityQueue;
-
+// https://leetcode.cn/problems/merge-k-sorted-lists/
 // 该解法复杂度为O(N)
 public class Code01_MergeKSortedLists {
     public static class ListNode {
