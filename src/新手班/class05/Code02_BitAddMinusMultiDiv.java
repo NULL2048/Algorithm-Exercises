@@ -1,6 +1,6 @@
 package 新手班.class05;
 
-// 测试链接：https://leetcode.com/problems/divide-two-integers
+// 测试链接：https://leetcode.cn/problems/divide-two-integers
 // 位运算实现加减乘除
 public class Code02_BitAddMinusMultiDiv {
     /**
