@@ -3,7 +3,8 @@ package 体系学习班.class17;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-
+// 这道题是一个关于数字数组的全排列：https://leetcode.cn/problems/permutations/
+// 思路和这个字符串的全排列是完全一样的
 public class Code03_PrintAllPermutations {
     public static List<String> permutation1(String s) {
         // 记录每一轮判断的结果

@@ -3,7 +3,7 @@ package 大厂刷题班.class17;
 import java.util.HashMap;
 
 // 从左往右的尝试模型
-// 本题测试链接 : https://leetcode.cn/p
+// 本题测试链接 : https://leetcode.cn/problems/distinct-subsequences-ii/
 public class Code04_DistinctSubseqValue {
     public static int distinctSubseqII(String str) {
         if (str == null || str.length() == 0) {
