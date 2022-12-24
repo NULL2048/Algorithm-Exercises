@@ -2,7 +2,8 @@ package 大厂刷题班.class28;
 
 import java.util.ArrayList;
 import java.util.List;
-
+// 递归   全排列
+// https://leetcode.cn/problems/permutations/
 public class Problem_0046_Permute {
     public List<List<Integer>> permute(int[] nums) {
         // 过滤无效参数
