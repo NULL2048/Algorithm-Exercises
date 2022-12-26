@@ -2,6 +2,7 @@ package 大厂刷题班.class04;
 
 // 子数组   状态压缩的动态规划
 // 不能用窗口，因为存在负数，没有单调性
+// https://leetcode.cn/problems/maximum-subarray/
 public class Code02_SubArrayMaxSum {
     public int maxSubArray(int[] nums) {
         if (nums == null || nums.length == 0) {
