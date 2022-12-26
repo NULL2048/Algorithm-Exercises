@@ -1,5 +1,6 @@
 package 大厂刷题班.class29;
 // 模拟   数学
+// https://leetcode.cn/problems/plus-one/
 public class Problem_0066_PlusOne {
     public int[] plusOne(int[] digits) {
         if (digits == null || digits.length == 0) {
