@@ -2,6 +2,7 @@ package 体系学习班.class17;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 
 public class Code02_PrintAllSubsquences {
@@ -79,4 +80,36 @@ public class Code02_PrintAllSubsquences {
 
     }
 
+
+    // 求全部子序列的力扣测试链接
+    // https://leetcode.cn/problems/subsets/
+    public List<List<Integer>> subsets(int[] nums) {
+        // 记录递归过程中的路径
+        LinkedList<Integer> path = new LinkedList<>();
+        // 用来记录找到的所有子序列
+        List<List<Integer>> ans = new ArrayList<>();
+        process3(nums, 0, ans, path);
+        // 返回结果
+        return ans;
+    }
+    // nums：固定参数，要找到nums的全部子序列
+    // index：递归遍历来到了nums[index]值，index是位置，当走到index时，说明数组中nums[0..index-1]位置的字符已经走过了！
+    // path：之前的决定保留的路径结果，都在path上。之前的决定已经不能改变了，就是path；nums[index....]还能决定，之前已经确定，而后面还能自由选择的话
+    // ans：把所有生成的子序列，放入到ans里去
+    public static void process3(int[] nums, int index, List<List<Integer>> ans, LinkedList<Integer> path) {
+        // 当递归遍历完整个数组，就将最后的结果添加到path中，结束递归
+        // 递归出口
+        if (index == nums.length) {
+            ans.add(new ArrayList<Integer>(path));
+            return;
+        }
+        // 下面就是每当遍历到一个位置index时，做两个不同的判断，要当前index位置的字符，不要当前index位置的值
+        // 不管怎么决定，都继续向下递归遍历，将index+1，其实就是没遍历一层，就分裂出两个子分支，整个递归过程其实就形成了一个二叉树结构
+        // 没有要index位置的字符
+        process3(nums, index + 1, ans, path);
+        // 要了index位置的字符
+        path.addLast(nums[index]);
+        process3(nums, index + 1, ans, path);
+        path.pollLast();
+    }
 }
