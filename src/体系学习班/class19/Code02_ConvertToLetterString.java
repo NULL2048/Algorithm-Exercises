@@ -1,5 +1,6 @@
 package 体系学习班.class19;
-
+// https://leetcode.cn/problems/decode-ways/
+// 直接用下面的动态规划代码提交到力扣就可以过
 public class Code02_ConvertToLetterString {
 
     // 1、暴力递归
