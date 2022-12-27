@@ -98,6 +98,7 @@ public class Code02_FibonacciProblem {
 
     // 后面是别的例子
     // 下面这道题是跳台阶问题的解题方法，和斐波那契数列差不多
+    // https://leetcode.cn/problems/climbing-stairs/   这道题就是很经典的爬楼梯问题，可以直接用斐波那契数列的代码提交
     // 1、利用递推关系，通过递归求
     public static int s1(int n) {
         if (n < 1) {
