@@ -1,6 +1,6 @@
 package 新手班.class07;
 
-// 测试地址：https://leetcode-cn.com/problems/validate-binary-search-tree/submissions/
+// 测试地址：https://leetcode.cn/problems/validate-binary-search-tree/
 public class Code03_IsBinarySearchTree {
     public static class TreeNode {
         public int val;
@@ -28,6 +28,7 @@ public class Code03_IsBinarySearchTree {
         }
     }
 
+    // 方法一：二叉树递归套路
     public boolean isValidBST(TreeNode root) {
         Info info = process(root);
         return info == null ? true : info.isSearch;
@@ -35,7 +36,7 @@ public class Code03_IsBinarySearchTree {
 
     /**
      判断一个树是不是搜索二叉树有两种方法：
-     1、判断该树的层序遍历是不是升序，搜索二叉树的层序遍历是升序的。
+     1、判断该树的中序遍历是不是升序，搜索二叉树的中序遍历是升序的。
      2、通过递归来判断
 
      该方法就是递归判断搜索二叉树
@@ -99,6 +100,43 @@ public class Code03_IsBinarySearchTree {
 
         // 递归接口，将该层结果数据返回给上一层
         return new Info(max, min, isSearch);
+    }
+
+
+
+    // 方法二：利用Morris遍历改中序遍历，来检查中序遍历是否为升序
+    public boolean isValidBST2(TreeNode root) {
+        if (root == null) {
+            return true;
+        }
+        TreeNode cur = root;
+        TreeNode mostRight = null;
+        Integer pre = null;
+        boolean ans = true;
+        while (cur != null) {
+            mostRight = cur.left;
+            if (mostRight != null) {
+                while (mostRight.right != null && mostRight.right != cur) {
+                    mostRight = mostRight.right;
+                }
+                if (mostRight.right == null) {
+                    mostRight.right = cur;
+                    cur = cur.left;
+                    continue;
+                } else {
+                    mostRight.right = null;
+                }
+            }
+            // 判断中序遍历是否为升序
+            if (pre != null && pre >= cur.val) {
+                // 不要return，完整跑完Morris遍历后再return，因为Morris会修改二叉树，需要让Morris遍历都执行完，把二叉树再还原回去
+                ans = false;
+            }
+            // 遍历过程中要记录中序遍历的上一个节点
+            pre = cur.val;
+            cur = cur.right;
+        }
+        return ans;
     }
 
 }
