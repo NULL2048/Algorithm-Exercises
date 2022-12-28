@@ -40,7 +40,7 @@ public class Code01_MorrisTraversal {
             // 情况二：如果cur有左孩子，则进入到该if分支，去找左树的最右节点
             if (mostRight != null) {
                 // 进入到该分支，就说明此时是情况二
-                // 遍历找到左树的最有节点
+                // 遍历找到左树的最右节点
                 // 这里循环结束条件是如果当向右遍历到一个节点的右指针是空了，说明就遍历到了左树的最右节点了。
                 // 或者向右遍历到一个节点的右指针指向cur，说明这是第二次来到这个节点了，这个节点就是左树最右节点，只不过第一次遍历到它的时候将它的右指针指向了cur
                 while (mostRight.right != null && mostRight.right != cur) {
@@ -98,7 +98,10 @@ public class Code01_MorrisTraversal {
         }
         System.out.println();
     }
+
     // morris改中序遍历
+    // 测试链接：https://leetcode.cn/problems/binary-tree-inorder-traversal/
+    // 需要稍微修改一下下面的代码提交，因为力扣要求的是返回中序序列的List，而不是原样输出
     public static void morrisIn(Node head) {
         if (head == null) {
             return;
