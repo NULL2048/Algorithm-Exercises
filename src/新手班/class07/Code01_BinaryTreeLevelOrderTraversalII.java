@@ -4,7 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
-// 测试链接：https://leetcode.com/problems/binary-tree-level-order-traversal-ii
+// 测试链接：https://leetcode.cn/problems/binary-tree-level-order-traversal-ii/
 public class Code01_BinaryTreeLevelOrderTraversalII {
 
     public static class TreeNode {
