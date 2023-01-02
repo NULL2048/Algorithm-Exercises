@@ -6,7 +6,7 @@ import java.util.List;
 // 从左向右的尝试模型    回溯构建结果
 public class Code02_PalindromePartitioningII {
 
-    // 测试链接只测了本题的第一问，直接提交可以通过
+    // 下面的测试链接只测了本题的第一问，直接提交可以通过
     // 本题测试链接 : https://leetcode.cn/problems/palindrome-partitioning-ii/
     public int minCut(String s) {
         char[] str = s.toCharArray();
@@ -191,6 +191,63 @@ public class Code02_PalindromePartitioningII {
         return ans;
     }
 
+
+    // 本题第四问，返回切出来的子串都是回文串的所有方案，和问题三不同的是并不要求切分刀数最少，直接返回所有符合条件的切分方案。
+    // 本题测试链接 : https://leetcode.cn/problems/palindrome-partitioning/
+    public List<List<String>> partition(String s) {
+        // 双层List，用来记录所有的分割方案
+        List<List<String>> ans = new ArrayList<>();
+        // 如果字符串只有一个字符，直接将其加入到答案中
+        if (s == null || s.length() < 2) {
+            List<String> cur = new ArrayList<>();
+            cur.add(s);
+            ans.add(cur);
+        } else {
+            char[] str = s.toCharArray();
+            int N = str.length;
+            // check[i][j]：i~j范围的字符串是回文串就为true，不是回文串就是false
+            boolean[][] checkMap = createCheckMap(str, N);
+
+            // 递归回溯，找到所有的分割情况
+            process(s, 0, 1, checkMap, new ArrayList<>(), ans);
+        }
+        return ans;
+    }
+
+    // s[0....i-1]的划分方案都存到path里去了
+    // 此时对s[i..j-1]进行考察，看s[i...j - 1]是否为一个回文串，如果是的话，就将i~j-1部分分割出来加入到path，然后再去尝试考察s[j...]如何切分
+    public static void process(String s, int i, int j, boolean[][] checkMap, List<String> path, List<List<String>> ans) {
+        // s[i...N-1]   已经递归到结尾了
+        if (j == s.length()) {
+            // 此时0~i-1的划分方案都已经放入到path了，如果此时i~j-1是一个回文串，并且j遍历完了整个字符串，就说明我们将i~j-1切分出来，加入到ans中，此时ans中就收集好了一种切分方案
+            if (checkMap[i][j - 1] ) {
+                // 将i~j-1切分出来加入的path中
+                path.add(s.substring(i, j));
+                // 将path加入到ans，至此ans收集到了一种切分方案
+                ans.add(copyStringList(path));
+                // 恢复现场，需要将path中的最后一个切分删掉，留给其他的尝试
+                path.remove(path.size() - 1);
+            }
+            // s[i...j-1]   还没有递归到结尾
+        } else {
+            // 判断能否回溯的条件，如果此时i~j-1是回文串，所以i~j-1是可以切分出来的，加入到path中
+            if (checkMap[i][j - 1]) {
+                // 将i~j-1切分出来加入到path中
+                path.add(s.substring(i, j));
+                // 此时0~j-1都已经找到切分方案加入到path了
+                // 下面我们需要去尝试在j~N-1范围内找到一个可以向下走的分支
+                // 从判断j~j+1范围开始，看j~j+1是否为一个回文串可以且分出来
+                process(s, j, j + 1, checkMap, path, ans);
+                // 恢复现场
+                path.remove(path.size() - 1);
+            }
+            // 执行到这里，0~i-1的切分方法都已经加入到path了，并且切分i~j-1的方案也已经尝试了（i~j-1有可能可以切分，也有可能无法切分，取决于checkMap[i][j - 1]）
+            // 下面我们继续向下递归，到下一个划分点i和j+1，去判断i~j+1范围的字符串是否为回文串，看能不能将这一部分且分出来。
+            // 这里不用去考虑是不是要在某些时候将i增加来尝试所有的可能性，因为将i加1进行尝试的前提是i前面已经找到了切分方法，而这个已经囊括在了上面代码的process(s, j, j + 1, checkMap, path, ans)中
+            process(s, i, j + 1, checkMap,  path, ans);
+        }
+    }
+
     public static void main(String[] args) {
         String s = null;
         List<String> ans2 = null;
@@ -240,7 +297,7 @@ public class Code02_PalindromePartitioningII {
         }
         System.out.println();
 
-        s = "fcfffcffcc";
+        s = "aab";
         ans3 = minCutAllWays(s);
         for (List<String> way : ans3) {
             for (String str : way) {
