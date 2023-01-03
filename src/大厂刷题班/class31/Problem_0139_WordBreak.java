@@ -147,7 +147,6 @@ public class Problem_0139_WordBreak {
             // 从j=i开始尝试，尝试i~j范围上的字符串能否被列表中的单词分解
             // 这个循环就是枚举所有以i为开始的前缀字符串，看列表中的单词有没有能和其匹配上的，能匹配上就说明这个前缀字符串可以被分解
             for (int j = i; j < sc.length; j++) {
-                //String tempStr = s.substring(i, j + 1);
                 // 随着循环遍历，也开始沿着前缀树匹配
                 // 如果前缀树没有sc[j]这个字符的分治，说明无法再继续匹配了，后面也不可能找到以i未开始的能匹配上的前缀串了，直接返回false，结束循环
                 if (cur.nexts[sc[j] - 'a'] == null) {
