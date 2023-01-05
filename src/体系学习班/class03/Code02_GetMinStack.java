@@ -1,8 +1,9 @@
 package 体系学习班.class03;
 
 import java.util.Stack;
-
+// https://leetcode.cn/problems/min-stack/
 public class Code02_GetMinStack {
+    // 节约最小栈空间，只有数小于最小栈栈顶才会将其压入最小栈，出栈的时候只有当出栈的数等于最小栈栈顶才会弹出。
     public static class MyStack1 {
         private Stack<Integer> stackData;
         private Stack<Integer> stackMin;
@@ -13,6 +14,7 @@ public class Code02_GetMinStack {
         }
 
         public void push(int newNum) {
+            // 只有最小栈为空或者压入的数小于最小栈栈顶才将该数压入最小栈，这样做是为了节约空间
             if (this.stackMin.isEmpty()) {
                 this.stackMin.push(newNum);
             } else if (newNum <= this.getmin()) {
@@ -26,6 +28,7 @@ public class Code02_GetMinStack {
                 throw new RuntimeException("Your stack is empty.");
             }
             int value = this.stackData.pop();
+            // 弹出的数等于最小栈栈顶才将最小栈栈顶同步弹出
             if (value == this.getmin()) {
                 this.stackMin.pop();
             }
@@ -40,6 +43,7 @@ public class Code02_GetMinStack {
         }
     }
 
+    // 没有解约最小栈空间，最小栈和数据栈同步压入和弹出
     public static class MyStack2 {
         private Stack<Integer> stackData;
         private Stack<Integer> stackMin;
@@ -55,6 +59,7 @@ public class Code02_GetMinStack {
             } else if (newNum < this.getmin()) {
                 this.stackMin.push(newNum);
             } else {
+                // 将最小栈栈顶再一次压入一个进到最小栈
                 int newMin = this.stackMin.peek();
                 this.stackMin.push(newMin);
             }
@@ -65,6 +70,7 @@ public class Code02_GetMinStack {
             if (this.stackData.isEmpty()) {
                 throw new RuntimeException("Your stack is empty.");
             }
+            // 同时弹出数据栈和最小栈
             this.stackMin.pop();
             return this.stackData.pop();
         }
