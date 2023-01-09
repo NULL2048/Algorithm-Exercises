@@ -2,7 +2,7 @@ package 大厂刷题班.class33;
 
 // 链表
 // https://leetcode.cn/problems/reverse-linked-list/
-public class Problem_0206_CourseSchedule {
+public class Problem_0206_ReverseLinkedList {
 
     public class ListNode {
         int val;
