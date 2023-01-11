@@ -3,6 +3,7 @@ package 体系学习班.class09;
 import java.util.Stack;
 
 // 判断一个链表是否为回文结构
+// https://leetcode.cn/problems/palindrome-linked-list/
 public class Code02_IsPalindromeList {
     public static class Node {
         public int value;
