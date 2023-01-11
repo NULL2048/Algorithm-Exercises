@@ -3,7 +3,7 @@ package 大厂刷题班.class08;
 import java.util.LinkedList;
 
 // 模拟    递归   栈
-// 本题测试链接 : https://leetcode.com/problems/basic-calculator-iii/    hard
+// 本题测试链接 : https://leetcode.cn/problems/basic-calculator-iii/    hard
 public class Code01_ExpressionCompute {
 
     public static int calculate(String str) {
