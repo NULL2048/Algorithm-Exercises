@@ -1,6 +1,6 @@
 package 体系学习班.class32;
-
-// 测试链接：https://leetcode.com/problems/range-sum-query-2d-mutable
+// IndexTree
+// 测试链接：https://leetcode.cn/problems/range-sum-query-2d-mutable
 // 但这个题是付费题目
 // 提交时把类名、构造函数名从Code02_IndexTree2D改成NumMatrix
 public class Code02_IndexTree2D {
