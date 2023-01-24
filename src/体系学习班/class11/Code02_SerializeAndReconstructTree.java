@@ -4,6 +4,9 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Stack;
 
+// 二叉树的序列化和反序列化
+// https://leetcode.cn/problems/serialize-and-deserialize-binary-tree/
+// 上面这个力扣是测试的先序序列化和反序列化，注意他们的输出格式即可，下面的先序代码需要调整一下才能提交通过
 public class Code02_SerializeAndReconstructTree {
     /*
      * 二叉树可以通过先序、后序或者按层遍历的方式序列化和反序列化，
