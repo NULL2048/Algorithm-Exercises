@@ -1,7 +1,6 @@
 package 大厂刷题班.class36;
 
 import java.util.Arrays;
-
 // 贪心    打表找规律
 // 来自腾讯
 // 给定一个数组arr，当拿走某个数a的时候，其他所有的数都+a
