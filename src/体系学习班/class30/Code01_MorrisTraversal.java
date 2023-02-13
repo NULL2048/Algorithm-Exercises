@@ -15,11 +15,11 @@ public class Code01_MorrisTraversal {
         if (root == null) {
             return;
         }
-        // 1
+        // 1 先序
         process(root.left);
-        // 2
+        // 2 中序
         process(root.right);
-        // 3
+        // 3 后序
     }
     // morris遍历
     public static void morris(Node head) {

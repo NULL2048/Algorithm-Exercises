@@ -17,11 +17,11 @@ public class Code02_RecursiveTraversalBT {
         if (head == null) {
             return;
         }
-        // 1
+        // 1 先序
         f(head.left);
-        // 2
+        // 2 中序
         f(head.right);
-        // 3
+        // 3 后序
     }
 
     // 先序打印所有节点
