@@ -6,6 +6,7 @@ package 大厂刷题班.class37;
 // 利用morris遍历 | 二叉树遍历   这两个方法都可以，morris遍历效率在常数上更高一些，额外空间复杂度更低   可以在两个章节的笔记都加上这道题
 
 // 二叉树  Morris遍历  先序遍历
+// https://leetcode.cn/problems/flatten-binary-tree-to-linked-list/
 public class Problem_0114_FlattenBinaryTreeToLinkedList {
     // 这个类不用提交
     public static class TreeNode {
