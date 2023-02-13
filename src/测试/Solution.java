@@ -3,53 +3,44 @@ package 测试;
 import java.util.*;
 
 class Solution {
-    public static int findKthLargest(int[] nums, int k) {
-        int n = nums.length;
-        int L = 0;
-        int R = n - 1;
-        int l = L - 1;
-        int r = R + 1;
-        k = n - k;
-
-        while (true) {
-            int v = nums[L + (int) (Math.random() * (R - L + 1))];
-            //int v = nums[L];
-
-            int cur = L;
-            while (l < r && cur < r) {
-                if (nums[cur] < v) {
-                    swap(++l, cur, nums);
-                } else if (nums[cur] > v) {
-                    swap(--r, cur, nums);
-                    continue;
-                }
-                cur++;
-            }
-
-            if (k > l && k < r) {
-                return v;
-            } else if (k <= l) {
-                R = l;
-                r = l + 1;
-                l = L - 1;
-            } else {
-                L = r;
-                l = L - 1;
-                r = R + 1;
-            }
-        }
+    public static int numTrees(int n) {
+        return compute(n);
     }
 
-    public static void swap(int i, int j, int[] nums) {
-        int temp = nums[i];
-        nums[i] = nums[j];
-        nums[j] = temp;
+    public static int compute(int N) {
+        // 过滤特殊值
+        if (N < 0) {
+            return 0;
+        }
+        if (N < 2) {
+            return 1;
+        }
+
+        long a = 1;
+        long b = 1;
+        // 2n
+        long limit = N << 1;
+        for (long i = 1; i <= limit; i++) {
+            // 计算a：从1累乘到n
+            if (i <= N) {
+                a *= i;
+            // 计算b：从n+1一直累乘到2n
+            } else {
+                b *= i;
+            }
+        }
+        // 公式3：k(n)= c(2n, n) / (n + 1)
+        // c(n, m) = n(n-1)...(n-m+1) / m!
+        // b：2n * (2n - 1) * ... * (2n - n + 1)   也就是从n+1一直累乘到2n
+        // a：1 * 2 * ... * (n - 1) * n   也就是从1一直累乘到n
+        long c = b / a;
+        return (int) ((c) / (N + 1));
     }
     public static void main(String[] args) {
         int[][] grid = {{0,1,2,0},{3,4,5,2},{1,3,1,5}};
         int[] nums = {7,13,20,19,19,2,10,1,1,19};
         int[] nums2 = {3,2,1,5,6,4};
-        int n = 3;
+        int n = 19;
 
 
 
@@ -85,7 +76,7 @@ class Solution {
 //            System.out.println();
 //        }
 
-        System.out.println(findKthLargest(nums2, 2));
+        System.out.println(numTrees(14));
 //        System.out.println("hesitxyplovdqfkz".equals(removeDuplicateLetters(str1)));
 
 //        int[] ans = maxSumOfThreeSubarrays(nums, n);
