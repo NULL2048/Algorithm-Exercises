@@ -3,6 +3,7 @@ package 大厂刷题班.class08;
 // 括号嵌套递归
 // 测试连接：https://leetcode.cn/problems/decode-string/
 public class Code02_DecodeString {
+    // 1、我自己写的代码
     public String decodeString(String s) {
         StringBuilder sb = new StringBuilder();
         sb = process(s, 0).str;
@@ -71,4 +72,52 @@ public class Code02_DecodeString {
         }
         return sb;
     }
+
+
+    // 2、左神的代码
+    public static String decodeString1(String s) {
+        char[] str = s.toCharArray();
+        return process(str, 0).ans;
+    }
+
+    public static class Info1 {
+        public String ans;
+        public int stop;
+
+        public Info1(String a, int e) {
+            ans = a;
+            stop = e;
+        }
+    }
+
+    // s[i....]  何时停？遇到   ']'  或者遇到 s的终止位置，停止
+    // 返回Info
+    // 0) 串
+    // 1) 算到了哪
+    public static Info1 process(char[] s, int i) {
+        StringBuilder ans = new StringBuilder();
+        int count = 0;
+        while (i < s.length && s[i] != ']') {
+            if ((s[i] >= 'a' && s[i] <= 'z') || (s[i] >= 'A' && s[i] <= 'Z')) {
+                ans.append(s[i++]);
+            } else if (s[i] >= '0' && s[i] <= '9') {
+                count = count * 10 + s[i++] - '0';
+            } else { // str[index] = '['
+                Info1 next = process(s, i + 1);
+                ans.append(timesString(count, next.ans));
+                count = 0;
+                i = next.stop + 1;
+            }
+        }
+        return new Info1(ans.toString(), i);
+    }
+
+    public static String timesString(int times, String str) {
+        StringBuilder ans = new StringBuilder();
+        for (int i = 0; i < times; i++) {
+            ans.append(str);
+        }
+        return ans.toString();
+    }
+
 }
