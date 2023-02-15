@@ -8,9 +8,11 @@ public class Problem_0191_NumberOf1Bits {
         int bits = 0;
         int rightOne = 0;
         while(n != 0) {
+            // 1的个数++
             bits++;
             // 只保留此时最右边的1，其他位都变0
             rightOne = n & (-n);
+            // 抹除掉当前这一轮n中最右侧的1
             n ^= rightOne;
         }
         return bits;
