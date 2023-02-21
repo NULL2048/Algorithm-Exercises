@@ -3,7 +3,9 @@ package 体系学习班.class12;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
-
+// https://leetcode.cn/problems/diameter-of-binary-tree/
+// 上面这个测试链接和上课讲的题目有一点点不同，上课讲的是两个节点之间的距离是节点数量，而力扣里面的距离是指的两个节点直接拿的路径数量
+// 所以下面的代码需要改一下才能提交，需要将结果减1才是力扣的答案
 public class Code05_MaxDistance {
     public static class Node {
         public int value;
