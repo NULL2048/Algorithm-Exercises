@@ -23,7 +23,7 @@ public class Code02_3Sum {
                 int r = i - 1;
                 // 利用单调性来找符合条件的两个数
                 while (l < r) {
-                    // l位置为第一个数或者它不能和其左边位置的数相等（提出相等的情况），这个前提下如果nums[l] + nums[r] == -nums[i]，那么这个就是我们要的结果
+                    // l位置为第一个数或者它不能和其左边位置的数相等（剔除相等的情况），这个前提下如果nums[l] + nums[r] == -nums[i]，那么这个就是我们要的结果
                     if ((l == 0 || nums[l - 1] != nums[l]) && nums[l] + nums[r] == -nums[i]) {
                         // 将答案假如list
                         List<Integer> threeSum = new ArrayList<>();
