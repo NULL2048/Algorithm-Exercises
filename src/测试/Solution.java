@@ -3,50 +3,44 @@ package 测试;
 import java.util.*;
 
 class Solution {
-    public static String minWindow(String sStr, String tStr) {
-        if (sStr.length() < tStr.length()) {
-            return "";
-        }
-        char[] s = sStr.toCharArray();
-        char[] t = tStr.toCharArray();
+    public static int longestSubstring(String str, int k) {
+        char[] s = str.toCharArray();
+        int n = s.length;
 
-        int l = 0;
-        int r = 0;
-        int all = 0;
-        int[] count = new int[256];
+        int max = 0;
+        for (int kinds = 1; kinds <= 26; kinds++) {
+            int[] count = new int['z' + 1];
+            int nowKinds = 0;
+            int satisfyKinds = 0;
+            int r = 0;
 
-        for (int i = 0; i < t.length; i++) {
-            count[t[i]]++;
-            all++;
-        }
-
-        int[] ans = new int[2];
-        int minLen = Integer.MAX_VALUE;
-        while (l <= r && r < s.length) {
-            if (count[s[r++]]-- > 0) {
-                all--;
-            }
-
-            if (all == 0) {
-                if (r - l < minLen) {
-                    ans[0] = l;
-                    ans[1] = r;
-                    minLen = r - l;
-                }
-
-
-                while (all != 2 && l <= r) {
-                    if (count[s[l++]]++ >= 0) {
-                        all++;
+            for (int l = 0; l < n; l++) {
+                while (r < n) {
+                    if (nowKinds < kinds || (nowKinds == kinds && count[s[r]] != 0)) {
+                        if (count[s[r]] == 0) {
+                            nowKinds++;
+                        }
+                        count[s[r]]++;
+                        if (count[s[r]] == k) {
+                            satisfyKinds++;
+                        }
+                        r++;
+                    } else {
+                        max = Math.max(max, r - l);
+                        break;
                     }
                 }
-                l--;
-                all--;
-                count[s[l]]++;
+                if (count[s[l]] == k) {
+                    satisfyKinds--;
+                }
+                if (count[s[l]] == 1) {
+                    nowKinds--;
+                }
+                count[s[l]]--;
             }
-        }
 
-        return sStr.substring(ans[0], ans[1]);
+        }
+        return max;
     }
 
     public static void main(String[] args) {
@@ -60,10 +54,10 @@ class Solution {
 
 
 
-        String str1 = "ADOBECODEBANC";
+        String str1 = "ababacb";
         String str2 = "ABC";
 
-        System.out.println(minWindow(str1, str2));
+        System.out.println(longestSubstring(str1, n));
 
 
 //        String ans = minWindow(nums, n);

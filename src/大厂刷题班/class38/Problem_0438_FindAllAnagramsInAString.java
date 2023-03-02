@@ -11,8 +11,7 @@ public class Problem_0438_FindAllAnagramsInAString {
         if (sStr == null || pStr == null || sStr.length() < pStr.length()) {
             return ans;
         }
-        // 这道题的欠帐表还是得用Map来做，不能用数组，因为我们无法区分这个位置是根本就没有存过数据（每一个数组位置默认都是0），还是说只是个数被减到0了
-        // 欠帐表中只存储p字符串上每个字符的欠帐情况，其他的字符都不记录
+        // 欠帐表中只存储p字符串上每个字符的欠帐情况，其他的字符都不记录。这道题还可以用数组来做欠帐表，效率会更高
         HashMap<Character, Integer> countMap = new HashMap<>();
         // 欠帐表中的欠帐个数
         int all = 0;
