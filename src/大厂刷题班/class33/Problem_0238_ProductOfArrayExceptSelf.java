@@ -8,7 +8,7 @@ public class Problem_0238_ProductOfArrayExceptSelf {
         int n = nums.length;
         // pos[i]表示i位置右侧的（不包括i位置）的后缀乘积
         int[] pos = new int[n];
-        // 记录当前的后缀成绩
+        // 记录当前的后缀乘积
         int posProduct = 1;
         // 生成后缀乘积数组
         for (int i = n - 1; i >= 0; i--) {
