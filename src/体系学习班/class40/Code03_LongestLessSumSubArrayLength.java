@@ -27,8 +27,8 @@ public class Code03_LongestLessSumSubArrayLength {
         int ans = 0;
         for (int i = 0; i < arr.length; i++) {
             // while循环结束之后：
-            // 1) 如果以i开头的情况下，累加和<=k的最长子数组是arr[i..end-1]，看看这个子数组长度能不能更新res；
-            // 2) 如果以i开头的情况下，累加和<=k的最长子数组比arr[i..end-1]短，更新还是不更新res都不会影响最终结果；
+            // 1) 如果以i开头的情况下，累加和<=k的最长子数组是arr[i..end-1]，看看这个子数组长度能不能更新ans；
+            // 2) 如果以i开头的情况下，累加和<=k的最长子数组比arr[i..end-1]短，更新还是不更新ans都不会影响最终结果；
             while (end < arr.length && sum + minSums[end] <= k) {
                 sum += minSums[end];
                 end = minSumEnds[end] + 1;
