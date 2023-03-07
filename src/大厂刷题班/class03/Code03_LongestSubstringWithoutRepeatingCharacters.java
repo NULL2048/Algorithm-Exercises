@@ -135,4 +135,36 @@ public class Code03_LongestSubstringWithoutRepeatingCharacters {
         }
         return maxLen;
     }
+
+
+    // 4、滑动窗口解法
+    public int lengthOfLongestSubstring4(String str) {
+        // 过滤特殊情况
+        if (str.length() <= 1) {
+            return str.length();
+        }
+        char[] s = str.toCharArray();
+        // 窗口左右边界
+        int l = 0;
+        int r = 0;
+        // 统计窗口内每一个字符的出现次数
+        int[] count = new int[256];
+        // 此时找到符合条件的最长子数组长度
+        int max = 0;
+        while (r < s.length) {
+            // 要保证窗口内的每一个字符出现的次数不能超过1
+            // 如果窗口内没有s[r]这个字符，就将其加入到窗口
+            if (count[s[r]] == 0) {
+                count[s[r++]]++;
+                // 尝试用此时窗口的长度来更新max
+                max = Math.max(max, r - l);
+                // 如果此时窗口内已经有s[r]这个字符了，那么就不能再加入一个同样的字符到窗口内了
+                // 此时我们需要右移左边界，将窗口内的字符弹出一个，看看弹出一个后能不能使右边界继续右括
+            } else {
+                count[s[l++]]--;
+            }
+        }
+        return max;
+    }
+
 }
