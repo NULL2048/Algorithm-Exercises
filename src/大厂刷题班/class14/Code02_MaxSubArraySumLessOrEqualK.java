@@ -21,7 +21,7 @@ public class Code02_MaxSubArraySumLessOrEqualK {
             sum += arr[i];
             // 找i之前的前缀和中大于等于K且最接近K的前缀和
             if (set.ceiling(sum - K) != null) {
-                // 如果找到的话，就用 当前i位置的前缀和sum - i之前的前缀和中大于等于K且最接近K的前缀和  就是以i结尾的子数组中累加和小于等于300且最大的累加和大小
+                // 如果找到的话，就用 当前i位置的前缀和sum - i之前的前缀和中大于等于(sum - K)且最接近(sum - K)的前缀和  就是以i结尾的子数组中累加和小于等于K且最大的累加和大小
                 max = Math.max(max, sum - set.ceiling(sum - K));
             }
             // 当前的前缀和加入到set中去，用于后续的计算
