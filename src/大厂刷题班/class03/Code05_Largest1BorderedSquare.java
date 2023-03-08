@@ -14,7 +14,7 @@ public class Code05_Largest1BorderedSquare {
         // rightInfo[1][1] = 3 表示从（1，1）位置向右有连续的三个1
         int[][] rightInfo = new int[n + 1][m + 1];
 
-        // 构造downInfo和rightInfo的预处理结构
+        // 构造downInfo和rightInfo的预处理结构  只需要求右边和下面的长度就好了，不需要求左边和上边的长度，因为这个信息也可以利用右边和下边的长度求出来，只是变换一下要求位置即可（左下角和右上角）
         getMInfo(grid, downInfo, rightInfo);
 
         int maxSize = 0;
