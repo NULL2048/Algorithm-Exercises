@@ -178,7 +178,7 @@ public class Code01_FindMinKth {
         int pivot = 0;
         // 每一轮返回的三段分割点下标
         int[] range = null;
-        // 快速选择法找中位数
+        // 快速选择法找中位数  求数组中第mid大的数字是多少（也就是求中位数）
         while (l < r) {
             // 这里用随机数随机生成一个位置的数做基准即可，并不会影响通过力扣测试，随机数不会造成错误的。这里也可以选择l~r范围内一个固定位置的数，例如(l + r) / 2位置的数作为基准
             pivot = nums[l + (int) (Math.random() * (r - l + 1))];
