@@ -56,6 +56,7 @@ public class Code01_QueryHobby {
             int a = countLess(indexArr, L);
             // 查询 < R+1 的下标有几个
             int b = countLess(indexArr, R + 1);
+            // 类似于前缀和定律的思想，用两者相减就是答案
             return b - a;
         }
         // 在有序数组arr中，用二分的方法数出<limit的数有几个
