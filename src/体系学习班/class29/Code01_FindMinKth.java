@@ -69,7 +69,7 @@ public class Code01_FindMinKth {
         int cur = L;
         while (cur < more) {
             if (arr[cur] < pivot) {
-                swap(arr, ++less, cur++);
+                swap(arr, cur++, ++less);
             } else if (arr[cur] > pivot) {
                 swap(arr, cur, --more);
             } else {
