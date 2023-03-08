@@ -39,7 +39,7 @@ public class Code01_MaxAndValue {
     // 如果有>2个，比如K个
     // 说明答案一定只用在这K个数中去选择某两个数，因为别的数在第i位都没有1，就这K个数有。
     // 答案在第i位上的状态一定是1，
-    // 只把这K个数作为剩余的数，继续考察第i-1位，其他数都淘汰掉
+    // 只把这K个数作为剩余的数，继续考察第i-1位，其他数都淘汰掉。
     public static int maxAndValue2(int[] arr) {
         // arr[0...M-1]  arr[M....]
         int M = arr.length;
