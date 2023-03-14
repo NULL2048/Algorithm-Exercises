@@ -13,7 +13,7 @@ public class Problem_0289_GameOfLife {
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < m; j++) {
                 int curOneCnt = getOneCnt(board, i, j);
-                // 利用位信息，就可以不适用辅助数组了，同事保留旧信息和新信息
+                // 利用位信息，就可以不使用辅助数组了，同时保留旧信息和新信息
                 // 如果周围有3个1，那么这个细胞下一步已经活
                 if (curOneCnt == 3) {
                     // 用末位的前一位来标识下一步的状态信息，所以和2取或运算
