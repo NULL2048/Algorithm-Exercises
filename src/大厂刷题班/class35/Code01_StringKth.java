@@ -42,6 +42,7 @@ public class Code01_StringKth {
         char[] num = s.toCharArray();
         int ans = 0;
         for (int i = 0, rest = len - 1; i < num.length; i++, rest--) {
+            // (num[i] - 'a')是因为给定的字符串中的每个字符，在这些字母的字典序前面还会有别的字符，这些字符的计算流程都是一样的，都是需要乘上f(rest)，所以这里直接把这些字符数量求出来，直接一并乘f(rest)
             ans += (num[i] - 'a') * f(rest) + 1; // 每一次都要加1，加的是以nums[i]开头，剩下长度为0的有1个
         }
         return ans;
