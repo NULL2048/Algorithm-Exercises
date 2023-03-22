@@ -41,7 +41,7 @@ public class Code02_ShortestBridge {
                         int nextsIndex = bfs(n, m, grid, distanceRecord[islandNo], curs, cursIndex, nexts, distance++);
 
                         // 当前nexts队列在下一轮宽度优先遍历的时候就就会变成下一轮的curs
-                        // 下面的就是要将nexts的地址赋值给curs上，这里要注意还要讲curs的地址赋值给next，就相当于两个引用交换了指向的地址空间
+                        // 下面的就是要将nexts的地址赋值给curs上，这里要注意还要将curs的地址赋值给next，就相当于两个引用交换了指向的地址空间
                         // 如果不交换，只将nexts赋值给curs，就会导致最后curs和nexts指向的是同一个地址空间，就会出现错误
                         int[] temp = curs;
                         curs = nexts;
@@ -70,12 +70,12 @@ public class Code02_ShortestBridge {
     }
 
     // 将这一片1都感染为2，并且初始化curs队列和distanceRecord。就是一个宽度优先遍历的感染过程，当这个过程完成之后，这一片1就都会设置为2
-    // 当前来到grid[i][j] , 总行数是N，总列数是M
-    // grid[i][j]感染出去(找到这一片岛所有的1),把每一个1的坐标，放入到int[] curs队列！
+    // 当前来到grid[i][j]，总行数是N，总列数是M
+    // grid[i][j]感染出去(找到这一片岛所有的1)，把每一个1的坐标，放入到int[] curs队列！
     // 1 (a,b) -> curs[index++] = (a * M + b)
     // 1 (c,d) -> curs[index++] = (c * M + d)
     // 二维已经变成一维了， 1 (a,b) -> a * M + b
-    // 设置距离record[a * M +b ] = 1，默认初始化的距离都是1
+    // 设置距离record[a * M + b] = 1，默认初始化的距离都是1
     public int infect(int n, int m, int i, int j, int[][] grid, int index, int[] distanceRecord, int[] curs) {
         // 保证当前位置不越界，并且这个位置在矩阵中的值为1
         if (i < 0 || i >= n || j < 0 || j >= m || grid[i][j] != 1) {
@@ -107,12 +107,12 @@ public class Code02_ShortestBridge {
     // 二维原始矩阵中，N总行数，M总列数
     // distance：当前要遍历到的这一层到那一片1的距离
     // cursSize：当前curs队列中的有效位置数量
-    // curs：curs中存储的是位置
-    // record里面拿距离，如果遍历到的位置对应的record值不是0，说明这个位置已经遍历过了，直接跳过
+    // curs：curs中存储的是二位下标转换成的一维下标位置
+    // distanceRecord[i]：里面要记录i位置（二维转一维的下标）到一片1的距离，如果遍历到的位置对应在数组distanceRecord里的值不是0，说明这个位置已经遍历过了，直接跳过
     public int bfs(int n, int m, int[][] grid, int[] distanceRecord, int[] curs, int cursSize, int[] nexts, int distance) {
         // 从nexts的0位置开始填充
         int nextsIndex = 0;
-        // 遍历curs中的位置，开始宽度优先遍历
+        // 遍历curs中的下标位置，开始宽度优先遍历
         for (int i = 0; i < cursSize; i++) {
             // 向当前位置左右上下都遍历一层，先判断位置合法性
             // 先去判断当前位置的左右上下是否还有位置，如果没有了，就设置为-1，如果有就计算出对应的位置。
