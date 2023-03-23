@@ -12,6 +12,7 @@ import java.util.Queue;
 public class Problem_0127_WordLadder {
     // 下面都是左神的代码，值得学习
 
+    // 1、左神的优秀解
     // start，出发的单词
     // to, 目标单位
     // list, 列表
@@ -82,7 +83,7 @@ public class Problem_0127_WordLadder {
     }
 
 
-    // 优化解，这个相对于上面的代码是常数优化，但是也算是最优解了
+    // 2、左神优化解，这个相对于上面的代码是常数优化，但是也算是最优解了
     public static int ladderLength2(String beginWord, String endWord, List<String> wordList) {
         HashSet<String> dict = new HashSet<>(wordList);
         if (!dict.contains(endWord)) {
@@ -123,6 +124,78 @@ public class Problem_0127_WordLadder {
             startSet = (nextSet.size() < endSet.size()) ? nextSet : endSet;
             endSet = (startSet == nextSet) ? endSet : nextSet;
         }
+        return 0;
+    }
+
+
+    // 3、这是我自己写的提交给力扣的代码，完全是只用宽度优先遍历实现的，和左神的方法一是相同的思路
+    public int ladderLength(String beginWord, String endWord, List<String> wordList) {
+        wordList.add(beginWord);
+        HashSet<String> wordSet = new HashSet<>(wordList);
+        // 先生成邻接表
+        HashMap<String, List<String>> neighborMap = getNeighborMap(wordSet);
+
+        // 再利用宽度优先搜索构造距离表，并且在构造距离表的过程中来找到最短路径的长度
+        return getShortestPathLength(beginWord, endWord, neighborMap);
+    }
+
+    // 构造邻接表
+    public HashMap<String, List<String>> getNeighborMap(HashSet<String> wordSet) {
+        HashMap<String, List<String>> neighborMap = new HashMap<>();
+
+        for (String word : wordSet) {
+            List<String> list = new ArrayList<>();
+            char[] w = word.toCharArray();
+            for (int i = 0; i < w.length; i++) {
+                for (char cha = 'a'; cha <= 'z'; cha++) {
+                    if (cha != w[i]) {
+                        char temp = w[i];
+                        w[i] = cha;
+
+                        if (wordSet.contains(String.valueOf(w))) {
+                            list.add(String.valueOf(w));
+                        }
+                        w[i] = temp;
+                    }
+                }
+            }
+
+            neighborMap.put(word, list);
+        }
+
+        return neighborMap;
+    }
+
+    // 宽度优先遍历找到最短路径的长度
+    public int getShortestPathLength(String beginWord, String endWord, HashMap<String, List<String>> neighborMap) {
+        Queue<String> queue = new LinkedList<String>();
+        HashSet<String> set = new HashSet<>();
+        HashMap<String, Integer> distanceMap = new HashMap<>();
+        queue.add(beginWord);
+        set.add(beginWord);
+        // 这里初始的距离是1，不是0，因为只要有一个单词也算是路径有1个长度了
+        distanceMap.put(beginWord, 1);
+
+        // 经典BFS
+        while (!queue.isEmpty()) {
+            String cur = queue.poll();
+
+            for (String str : neighborMap.get(cur)) {
+                // 不走回头路
+                if (!set.contains(str)) {
+                    // 因为整个流程是从起点一层一层的往外遍历，所以第一次遍历到结尾单词时找到的路径长度一定就是最短的，因为每一次的长度都是严格加1
+                    if (str.equals(endWord)) {
+                        return distanceMap.get(cur) + 1;
+                    } else {
+                        queue.add(str);
+                        set.add(str);
+                        distanceMap.put(str, distanceMap.get(cur) + 1);
+                    }
+                }
+
+            }
+        }
+
         return 0;
     }
 }
