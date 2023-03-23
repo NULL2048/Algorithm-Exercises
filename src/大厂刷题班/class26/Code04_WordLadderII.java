@@ -142,7 +142,7 @@ public class Code04_WordLadderII {
         if (nowWord.equals(endWord)) {
             // 不能直接将path加入，要单独创建一个地址空间加入到ans中，因为path的地址在所有的递归层中是共用的，在后面的递归中可能会改变path中的值，如果直接将path加入到ans中，就会导致ans中的内容会随着递归操作一起变化
             ans.add(new LinkedList<String>(path));
-            // 还没有到递归出口
+        // 还没有到递归出口
         } else {
             // 遍历nowWord所有直接相连的节点，找到到beginWord距离严格加1的节点，去深度遍历
             for (String next : neighborMap.get(nowWord)) {
@@ -157,7 +157,7 @@ public class Code04_WordLadderII {
                 }
             }
         }
-
+        // 还要将本层一开始加入的节点弹出，要恢复现场，不能影响其他的递归流程
         path.pollLast();
     }
 }
