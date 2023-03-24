@@ -106,7 +106,7 @@ public class Problem_0130_SurroundedRegions {
         }
     }
 
-    // 通过递归来进行感染过程，从(i,j)开始将连城一片的O改成F
+    // 通过递归来进行感染过程，从(i,j)开始将连成一片的O改成F
     public void infect(char[][] board, int i, int j) {
         if (i < 0 || i >= board.length || j < 0 || j >= board[0].length || board[i][j] != 'O') {
             return;
