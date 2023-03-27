@@ -10,11 +10,10 @@ public class Code03_RemoveInvalidParentheses {
     public List<String> removeInvalidParentheses(String s) {
         List<String> ans = new ArrayList<>();
         remove(s, 0, 0, ans, new char[] {'(', ')'});
-
         return ans;
     }
 
-    // modifyIndex <= checkIndex
+    // modifyIndex（这个在下面的代码写的是deleteIndex，相当于笔记中的j） <= checkIndex（相当于笔记中的i）
     // 只查s[checkIndex....]的部分，因为之前的一定已经调整对了
     // 但是之前的部分是怎么调整对的，调整到了哪？就是modifyIndex
     // 比如：
@@ -41,18 +40,16 @@ public class Code03_RemoveInvalidParentheses {
             if (str.charAt(i) == par[0]) {
                 cnt++;
             }
-
             if (str.charAt(i) == par[1]) {
                 cnt--;
             }
-
             // 一旦出现了cnt小于0的情况，就说明此时与i配对的左括号（右括号）肯定存在多个配对的右括号（左括号），所里我们要开始找可以选择删除的括号
             if (cnt < 0) {
                 // 从deleteIndex开始向右边遍历，遍历到i位置，按照我们的规则找到所有可以删除的字符
                 for (int j = deleteIndex; j <= i; j++) {
                     // 如果此时是可以删除的字符，就将其删除，并将删除后的字符串继续向下递归
                     if (str.charAt(j) == par[1] && (j == deleteIndex || str.charAt(j - 1) != par[1])) {
-                        // 删除玩字符之后的i和j已经指向的是他们原本下一个位置了，所以这里i和j不用加1
+                        // 删除完字符之后的i和j已经指向的是他们原本下一个位置了，所以这里i和j不用加1
                         remove(str.substring(0, j) + str.substring(j + 1, str.length()), i, j, ans, par);
                     }
                 }
@@ -62,21 +59,19 @@ public class Code03_RemoveInvalidParentheses {
                 // 所以还在删除阶段，没有将所有无效括号删除完时，会直接走到这个return返回，不会接着向下执行去收集答案
                 return;
             }
-
         }
-
         // 一旦执行到这里，一定是右括号多的情况都已经删除了，或者此时字符串已经是删除之后没有无效括号的字符串了
-
-        // 将字符串反转
+        // 将字符串反转，不管是右括号多的情况都已经删除的情况，还是此时字符串已经是删除之后没有无效括号的字符串的情况，这里都要做一次反转
+        // 因为如果是第一种情况，那么我们就还需要将字符串反转去删除左括号多的情况，所以需要反转一下，然后再去调用remove
+        // 如果是第二种情况，此时就是在删除多出来的左括号，那么这个字符串已经是之前给反转过的，所以我们需要再将字符串反转恢复成原来的样子，才可以加入ans收集答案
         String reversed = new StringBuilder(str).reverse().toString();
         // 如果此时par[0] == '('，说明还没有找左括号多的情况，那么我们就将反转的字符串在调用一边递归，并且将new char[] {')', '('}传入，相当于再从反方向找一遍左括号多的情况
         if (par[0] == '(') {
             remove(reversed, 0, 0, ans, new char[] {')', '('});
-            // 如果两个方向都已经找完了，那么此时就是答案，将其添加到ans中
+        // 如果两个方向都已经找完了，那么此时就是答案，将其添加到ans中
         } else {
             ans.add(reversed);
         }
-
     }
 
 }
