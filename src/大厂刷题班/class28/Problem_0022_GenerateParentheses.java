@@ -24,7 +24,7 @@ public class Problem_0022_GenerateParentheses {
     // leftMinusRight：左括号数量减右括号数量的差值
     // leftRest：记录还能放几个左括号，给的数字是n，那么一定是有n个左括号和n个右括号才行
     public void process(int index, char[] path, List<String> ans, int leftMinusRight, int leftRest) {
-        // basecase  当path已经放完了，说明已经手机好答案了。整个递归过程中会保证只有有效的括号组合才能递归到最后
+        // basecase  当path已经放完了，说明已经收集好答案了。整个递归过程中会保证只有有效的括号组合才能递归到最后
         if (index == path.length) {
             ans.add(String.valueOf(path));
         } else {
