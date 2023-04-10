@@ -113,6 +113,17 @@
             </LeetcodeEditor>
           </value>
         </entry>
+        <entry key="$USER_HOME$/AppData/Local/Temp/leetcode/editor/cn/[23]合并 K 个升序链表.java">
+          <value>
+            <LeetcodeEditor>
+              <option name="contentPath" value="$USER_HOME$/AppData/Local/Temp/leetcode/editor/cn/doc/content/[23]合并 K 个升序链表.md" />
+              <option name="frontendQuestionId" value="leetcode.cn23" />
+              <option name="host" value="leetcode.cn" />
+              <option name="path" value="$USER_HOME$/AppData/Local/Temp/leetcode/editor/cn/[23]合并 K 个升序链表.java" />
+              <option name="titleSlug" value="merge-k-sorted-lists" />
+            </LeetcodeEditor>
+          </value>
+        </entry>
         <entry key="$USER_HOME$/AppData/Local/Temp/leetcode/editor/cn/[282]给表达式添加运算符.java">
           <value>
             <LeetcodeEditor>
@@ -124,6 +135,28 @@
             </LeetcodeEditor>
           </value>
         </entry>
+        <entry key="$USER_HOME$/AppData/Local/Temp/leetcode/editor/cn/[295]数据流的中位数.java">
+          <value>
+            <LeetcodeEditor>
+              <option name="contentPath" value="$USER_HOME$/AppData/Local/Temp/leetcode/editor/cn/doc/content/[295]数据流的中位数.md" />
+              <option name="frontendQuestionId" value="leetcode.cn295" />
+              <option name="host" value="leetcode.cn" />
+              <option name="path" value="$USER_HOME$/AppData/Local/Temp/leetcode/editor/cn/[295]数据流的中位数.java" />
+              <option name="titleSlug" value="find-median-from-data-stream" />
+            </LeetcodeEditor>
+          </value>
+        </entry>
+        <entry key="$USER_HOME$/AppData/Local/Temp/leetcode/editor/cn/[2]两数相加.java">
+          <value>
+            <LeetcodeEditor>
+              <option name="contentPath" value="$USER_HOME$/AppData/Local/Temp/leetcode/editor/cn/doc/content/[2]两数相加.md" />
+              <option name="frontendQuestionId" value="leetcode.cn2" />
+              <option name="host" value="leetcode.cn" />
+              <option name="path" value="$USER_HOME$/AppData/Local/Temp/leetcode/editor/cn/[2]两数相加.java" />
+              <option name="titleSlug" value="add-two-numbers" />
+            </LeetcodeEditor>
+          </value>
+        </entry>
         <entry key="$USER_HOME$/AppData/Local/Temp/leetcode/editor/cn/[301]删除无效的括号.java">
           <value>
             <LeetcodeEditor>
@@ -132,6 +165,17 @@
               <option name="host" value="leetcode.cn" />
               <option name="path" value="$USER_HOME$/AppData/Local/Temp/leetcode/editor/cn/[301]删除无效的括号.java" />
               <option name="titleSlug" value="remove-invalid-parentheses" />
+            </LeetcodeEditor>
+          </value>
+        </entry>
+        <entry key="$USER_HOME$/AppData/Local/Temp/leetcode/editor/cn/[347]前 K 个高频元素.java">
+          <value>
+            <LeetcodeEditor>
+              <option name="contentPath" value="$USER_HOME$/AppData/Local/Temp/leetcode/editor/cn/doc/content/[347]前 K 个高频元素.md" />
+              <option name="frontendQuestionId" value="leetcode.cn347" />
+              <option name="host" value="leetcode.cn" />
+              <option name="path" value="$USER_HOME$/AppData/Local/Temp/leetcode/editor/cn/[347]前 K 个高频元素.java" />
+              <option name="titleSlug" value="top-k-frequent-elements" />
             </LeetcodeEditor>
           </value>
         </entry>
@@ -176,6 +220,17 @@
               <option name="host" value="leetcode.cn" />
               <option name="path" value="$USER_HOME$/AppData/Local/Temp/leetcode/editor/cn/[39]组合总和.java" />
               <option name="titleSlug" value="combination-sum" />
+            </LeetcodeEditor>
+          </value>
+        </entry>
+        <entry key="$USER_HOME$/AppData/Local/Temp/leetcode/editor/cn/[407]接雨水 II.java">
+          <value>
+            <LeetcodeEditor>
+              <option name="contentPath" value="$USER_HOME$/AppData/Local/Temp/leetcode/editor/cn/doc/content/[407]接雨水 II.md" />
+              <option name="frontendQuestionId" value="leetcode.cn407" />
+              <option name="host" value="leetcode.cn" />
+              <option name="path" value="$USER_HOME$/AppData/Local/Temp/leetcode/editor/cn/[407]接雨水 II.java" />
+              <option name="titleSlug" value="trapping-rain-water-ii" />
             </LeetcodeEditor>
           </value>
         </entry>
@@ -231,6 +286,17 @@
               <option name="host" value="leetcode.cn" />
               <option name="path" value="$USER_HOME$/AppData/Local/Temp/leetcode/editor/cn/[815]公交路线.java" />
               <option name="titleSlug" value="bus-routes" />
+            </LeetcodeEditor>
+          </value>
+        </entry>
+        <entry key="$USER_HOME$/AppData/Local/Temp/leetcode/editor/cn/[875]爱吃香蕉的珂珂.java">
+          <value>
+            <LeetcodeEditor>
+              <option name="contentPath" value="$USER_HOME$/AppData/Local/Temp/leetcode/editor/cn/doc/content/[875]爱吃香蕉的珂珂.md" />
+              <option name="frontendQuestionId" value="leetcode.cn875" />
+              <option name="host" value="leetcode.cn" />
+              <option name="path" value="$USER_HOME$/AppData/Local/Temp/leetcode/editor/cn/[875]爱吃香蕉的珂珂.java" />
+              <option name="titleSlug" value="koko-eating-bananas" />
             </LeetcodeEditor>
           </value>
         </entry>

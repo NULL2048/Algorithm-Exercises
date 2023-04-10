@@ -135,7 +135,7 @@ public class Problem_0227_BasicCalculatorII {
         int n = s.length();
         for (int i = 0; i < n; i++) {
             char ch = s.charAt(i);
-            // 收集数字，不适用内置函数生成
+            // 收集数字，不使用内置函数生成
             if (Character.isDigit(ch)) {
                 num = num * 10 + ch - '0';
             }
@@ -165,7 +165,7 @@ public class Problem_0227_BasicCalculatorII {
                 preSign = ch;
             }
         }
-        // 将栈中所有书相加就是结果
+        // 将栈中所有数相加就是结果
         int ans = 0;
         while (!stack.isEmpty()) {
             ans += stack.pop();
