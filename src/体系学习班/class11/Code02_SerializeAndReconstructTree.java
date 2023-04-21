@@ -44,7 +44,7 @@ public class Code02_SerializeAndReconstructTree {
         return ans;
     }
 
-    // 先序遍历序列化
+    // 先序遍历序列化   整个代码就是基于二叉树的先序遍历（递归版）
     public static void pres(Node head, Queue<String> ans) {
         // 如果当前节点为空，则将null加入到队列中，因为空姐点也不能忽略
         if (head == null) {
@@ -67,7 +67,7 @@ public class Code02_SerializeAndReconstructTree {
         return preb(prelist);
     }
 
-    // 先序遍历反序列化
+    // 先序遍历反序列化    整个代码就是基于二叉树的先序遍历（递归版）
     public static Node preb(Queue<String> prelist) {
         // 弹出队列头节点
         String value = prelist.poll();
@@ -108,7 +108,7 @@ public class Code02_SerializeAndReconstructTree {
         return ans;
     }
 
-    // 后序遍历序列化
+    // 后序遍历序列化       整个代码就是基于二叉树的后序遍历（递归版）
     public static void poss(Node head, Queue<String> ans) {
         if (head == null) {
             ans.add(null);
@@ -120,7 +120,7 @@ public class Code02_SerializeAndReconstructTree {
         }
     }
 
-    // 后序遍历反序列化
+    // 后序遍历反序列化       需要用到栈
     public static Node buildByPosQueue(Queue<String> poslist) {
         // 如果序列化字符串队列为空，则直接返回null
         if (poslist == null || poslist.size() == 0) {
@@ -148,7 +148,7 @@ public class Code02_SerializeAndReconstructTree {
         return head;
     }
 
-    // 层序遍历序列化
+    // 层序遍历序列化      整个代码就是基于二叉树的层序遍历代码
     public static Queue<String> levelSerial(Node head) {
         // ans队列用来存储序列化结果
         Queue<String> ans = new LinkedList<>();
@@ -188,7 +188,7 @@ public class Code02_SerializeAndReconstructTree {
         return ans;
     }
 
-    // 层序遍历反序列化
+    // 层序遍历反序列化      整个代码就是基于二叉树的层序遍历代码
     public static Node buildByLevelQueue(Queue<String> levelList) {
         // 如果序列化结果为空，则直接返回null
         if (levelList == null || levelList.size() == 0) {
