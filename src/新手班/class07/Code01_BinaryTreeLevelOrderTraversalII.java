@@ -20,7 +20,7 @@ public class Code01_BinaryTreeLevelOrderTraversalII {
     public List<List<Integer>> levelOrderBottom(TreeNode root) {
         // 存放结果的对象
         LinkedList<List<Integer>> ans = new LinkedList<List<Integer>>();
-        // 对于边界问题一定要看题干，体感都说了，如果root时空，应该返回一个空数组，而不是返回null
+        // 对于边界问题一定要看题干，题干都说了，如果root时空，应该返回一个空数组，而不是返回null
         if (root == null) {
             return ans;
         }
