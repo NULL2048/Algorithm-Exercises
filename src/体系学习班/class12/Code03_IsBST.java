@@ -74,7 +74,7 @@ public class Code03_IsBST {
         Info leftInfo = process(x.left);
         Info rightInfo = process(x.right);
 
-        // 设置当树的最大值
+        // 设置当前树的最大值
         int max = x.value;
         // 用左右树最大值和当前树根节点比较，找到当前树的最大值
         if (leftInfo != null) {
