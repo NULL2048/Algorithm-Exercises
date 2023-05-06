@@ -66,7 +66,7 @@ public class Code04_MaxHappy {
 
     // 二叉树递归套路
     public static Info process(Employee x) {
-        // 1、处理空姐点
+        // 1、处理空节点
         // 如果一个节点是null，那么它来或不来得到的最大快乐值都是0
         if (x == null) {
             return new Info(0, 0);
