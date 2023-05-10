@@ -34,13 +34,13 @@ public class Code02_MinCameraCover {
         }
 
         Info rootInfo = process(root);
-        // data.uncovered + 1既然你这个位置没有被覆盖，但是这个位置下面给都已经能保证被覆盖了，我干脆直接在这个位置给你一个相机就行了，所以这里要加1
+        // rootInfo.uncovered + 1既然你这个位置没有被覆盖，但是这个位置下面给都已经能保证被覆盖了，我干脆直接在这个位置给你一个相机就行了，所以这里要加1
         return (int) Math.min(rootInfo.uncovered + 1, Math.min(rootInfo.coveredNoCamera, rootInfo.coveredHasCamera));
     }
 
     // 将所有可能的情况都通过递归尝试出来
     public Info process(TreeNode head) {
-        // 递归出口，当递归到最底层的空节点是，这个节点是必须被覆盖的，但是这个节点上不能放相机
+        // 递归出口，当递归到最底层的空节点时，这个节点是必须被覆盖的，但是这个节点上不能放相机
         // 所以这里就返回被覆盖但是没相机的数量是0，其他的都是系统最大值，表示不存在这两种情况
         if (head == null) {
             return new Info(Integer.MAX_VALUE, 0, Integer.MAX_VALUE);
