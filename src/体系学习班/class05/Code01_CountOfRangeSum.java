@@ -92,7 +92,7 @@ public class Code01_CountOfRangeSum {
         // 窗口边界都从左组最左端开始，这个窗口就是看当以一个右组的数为基准时，左组有哪些数大小是符合范围条件的，因为组内都是有序的数，所以符合范围条件的书也肯定都是相邻连续的
         // 窗口左边界
         int leftWindow = L;
-        // 窗口有边界
+        // 窗口右边界
         int rightWindow = L;
         // [windowL, windowR)
 
