@@ -37,8 +37,41 @@ public class Code06_MinLengthForSort {
             }
         }
 
-        // l的右边和r的左边一定都是有序的了，在排序过程中不需要再做调整了
+        // l的右边和r的左边一定都是有序的了，在排序过程中不需要再做调整了（注意完成上述操作后 l 比 r 大，即 l 在 r的右边）
         // 如果nums数组本身已经是整体有序的，那么求出来的l-r是小于0的，这种情况直接返回0
         return Math.max(l - r + 1, 0);
+    }
+
+    // 这是我自己写的版本，相对更容易理解，变量的命名也更好
+    public int findUnsortedSubarray1(int[] nums) {
+        if (nums == null && nums.length == 0) {
+            return 0;
+        }
+        int n = nums.length;
+        int maxLeft = nums[0];
+        // 要调整的右边界
+        int right = -1;
+        for (int i = 1; i < n; i++) {
+            if (nums[i] >= maxLeft) {
+                maxLeft = nums[i];
+            } else {
+                right = i;
+            }
+        }
+
+        int minRight = nums[n - 1];
+        // 要调整的左边界
+        int left = -1;
+        for (int i = n - 1; i >= 0; i--) {
+            if (nums[i] <= minRight) {
+                minRight = nums[i];
+            } else {
+                left = i;
+            }
+        }
+
+        int len = left == right ? 0 : right - left + 1;
+
+        return len;
     }
 }

@@ -37,7 +37,7 @@ public class Code02_HeapSort {
         // i表示当前我们大根堆的构建完成范围  从0~i一点点的构建，当i=arr.length-1就说明整个数组的大根堆已经构建完成了
         // O(N*logN)
         for (int i = 0; i < arr.length; i++) {
-            // 把数组中下标位i的节点新加入到大根堆中，并且进行调正形成新的大根堆
+            // 把数组中下标位i的节点新加入到大根堆中，并且进行调整形成新的大根堆
             heapInsert(arr, i);
         }
 
