@@ -11,7 +11,7 @@ public class Problem_0012_IntegerToRoman {
                 { "", "C", "CC", "CCC", "CD", "D", "DC", "DCC", "DCCC", "CM" },
                 { "", "M", "MM", "MMM" } };
         StringBuilder roman = new StringBuilder();
-        // 因为题目说了给ide给的num不会超过3999，所以下面准备四位数就够了
+        // 因为题目说了给的num不会超过3999，所以下面准备四位数就够了
         roman
                 .append(c[3][num / 1000 % 10])  // 如果压根就没有千位，除以1000就会得0，0下标在前面打表的数组对应的都是空字符串，所以就相当于什么都没加入
                 .append(c[2][num / 100 % 10])
