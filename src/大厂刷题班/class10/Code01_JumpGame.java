@@ -17,6 +17,7 @@ public class Code01_JumpGame {
             // 如果向右一步一步移动的位置超过了之前一步能到达的最远位置cur，说明想要来到当前位置就必须再多迈一步了，step++
             // 然后就将当前一步能走到的最远位置更新，即将next赋值给cur
             if (cur < i) {
+                // 加的这1步，就是指跳到next位置的那一步
                 step++;
                 cur = next;
             }
