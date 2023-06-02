@@ -107,4 +107,94 @@ public class Code03_LongestConsecutive {
         }
         return len;
     }
+
+
+    // 下面这段代码是我后来自己写的代码，我感觉从代码的流程和注释来看更好理解，更符合我自己的思路
+    class Solution {
+        public int longestConsecutive(int[] nums) {
+            // 过滤无效参数
+            if (nums == null || nums.length == 0) {
+                return 0;
+            }
+            // 头表
+            HashMap<Integer, Integer> headMap = new HashMap<>();
+            // 尾表
+            HashMap<Integer, Integer> tailMap = new HashMap<>();
+            HashSet<Integer> visited = new HashSet<>();
+
+            for (int num : nums) {
+                // 不能重复访问相同的数字
+                if (!visited.contains(num)) {
+                    // 一开始先不管别的，先把当前遍历到的数字加入到两个Map中
+                    headMap.put(num, 1);
+                    tailMap.put(num, 1);
+                    visited.add(num);
+
+                    // 先从尾表开始处理
+                    // 如果尾表中存在num - 1这个数，就说明加入了num之后，就会将连续的数再推高一个长度，也就是尾标开头数字从num开始算起，不用从num-1开始算了
+                    if (tailMap.containsKey(num - 1)) {
+                        // 先查询原先以num-1结尾的尾表连续长度
+                        int lastLen = tailMap.get(num - 1);
+                        // 加入num后，就能将这段连续的长度再向前推一个，以后就以num作为结尾了
+                        tailMap.put(num, lastLen + 1);
+                        // num-1的尾表就没用了，直接移除
+                        tailMap.remove(num - 1);
+
+
+                        // 每修改一次尾标，对应连续数字的头表中的信息也要跟着的修改
+                        // 找到原先尾表中num-1对应的头表中的开头key  用下标减去长度再加1，就能得到这一段连续的开头数字
+                        int headKey = num - 1 - lastLen + 1;
+                        // 将头表中这段连续长度加1，这里不用修改headKey，因为数字加在了尾部，不影响开头
+                        headMap.put(headKey, lastLen + 1);
+                    }
+
+                    // 再去处理头表，这里还要注意一步操作，就是将之前独立出来的两段连续数字，因为加了num之后，就可以练成一大段长的连续数字的情况，要将这种情况进行合并    这个合并操作是一定要做的，因为只要是进到这个分支，就一定需要合并操作，因为至少我们把num加入到Map中了，前一段的连续数字就是带着num的
+                    if (headMap.containsKey(num + 1)) {
+                        // 先找前面一段的连续数字，肯定能找到，因为至少我们在一开始加入了num了   找前一段连续数字的时候要带着num
+                        // 先找前一段的尾表，以num结尾的
+                        int preTailKey = num;
+                        // 找这一段尾表的长度，至少也能找出来1，因为在最开始向尾表中加入过num了
+                        int preTailLen = tailMap.get(preTailKey);
+                        // 再找前面一段的连续数字的头表的开头数字
+                        int preHeadKey = preTailKey - preTailLen + 1;
+                        // 获取前面一段的头表的长度
+                        int preHeadLen = headMap.get(preHeadKey);
+
+
+                        // 下面再去找后面一段的连续数字
+                        // 后面一段的连续数字的头表  一定存在，否则就进不来这个分支了
+                        int postHeadKey = num + 1;
+                        // 后面一段头表的长度
+                        int postHeadLen = headMap.get(postHeadKey);
+                        // 再去计算后面一段尾表的结尾数字
+                        int postTailKey = postHeadKey + postHeadLen - 1;
+                        // 后面一段尾表的长度
+                        int postTailLen = tailMap.get(postTailKey);
+
+
+                        // 因为加入了num，就将前后两段连续数字连成一大段了
+                        // 用前一段的头表的key来修改成大段的连续数字   也就是整个连续数字的最开头的数
+                        headMap.put(preHeadKey, preHeadLen + postHeadLen);
+                        // 用后一段的尾表的key来修改成大段地连续数字    也就是整个连续数字的最结尾的数
+                        tailMap.put(postTailKey, preHeadLen + postHeadLen);
+
+
+                        // 前面一段的尾表开头和后面一段的头表开头也就没用了，直接移除
+                        tailMap.remove(preTailKey);
+                        headMap.remove(postHeadKey);
+
+
+                    }
+                }
+            }
+
+            // 这里随便找尾表或者头表都可以，遍历找到最大长度的连续区间并返回
+            int ans = -1;
+            for (Integer len : headMap.values()) {
+                ans = Math.max(ans, len);
+            }
+
+            return ans;
+        }
+    }
 }
