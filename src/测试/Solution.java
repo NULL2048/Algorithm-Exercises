@@ -3,36 +3,53 @@ package 测试;
 import java.util.*;
 
 class Solution {
-    public static List<List<Integer>> combinationSum(int[] candidates, int target) {
-        List<List<Integer>> ans = new ArrayList<>();
+    static class RandomizedSet {
+        public HashMap<Integer, Integer> valMap;
+        public HashMap<Integer, Integer> indexMap;
 
-        int[] path = new int[candidates.length];
-        process(path, 0, 0, candidates, 0, target, ans);
-        return ans;
-    }
+        public RandomizedSet() {
+            this.valMap = new HashMap<>();
+            this.indexMap = new HashMap<>();
+        }
 
-    public static void  process(int[] path, int pi, int index, int[] candidates, int sum, int target, List<List<Integer>> ans) {
-        if (sum == target) {
-            List<Integer> list = new ArrayList<Integer>();
-            for (int i = 0; i < pi; i++) {
-                list.add(path[i]);
+        public boolean insert(int val) {
+            if (valMap.containsKey(val)) {
+                return false;
+            } else {
+                int index = valMap.size();
+                valMap.put(val, index);
+                indexMap.put(index, val);
+                return true;
             }
-            ans.add(list);
         }
 
-        if (index == candidates.length) {
-            return;
+        public boolean remove(int val) {
+            if (valMap.containsKey(val)) {
+                int deleteIndex = indexMap.get(val);
+                int endIndex = valMap.size() - 1;
+                int endIndexVal = indexMap.get(endIndex);
+
+                indexMap.remove(deleteIndex);
+                valMap.remove(val);
+                indexMap.remove(endIndex);
+                valMap.remove(endIndexVal);
+
+                if (endIndexVal != val) {
+                    valMap.put(endIndexVal, deleteIndex);
+                    indexMap.put(deleteIndex, endIndexVal);
+                }
+
+
+                return true;
+            } else {
+                return false;
+            }
         }
 
-        int tempSum = 0;
-        for (int i = 0; i < candidates.length && sum + tempSum <= target; i++) {
-            path[pi + i] = candidates[index];
-            tempSum += candidates[index];
-            process(path, pi + i + 1, index + 1, candidates, sum + tempSum, target, ans);
+        public int getRandom() {
+            int index = (int) (Math.random() * valMap.size());
+            return indexMap.get(index);
         }
-
-        process(path, pi, index + 1, candidates, sum, target, ans);
-
     }
 
     public static void main(String[] args) {
@@ -49,7 +66,16 @@ class Solution {
         String str1 = "abcabcbb";
         String str2 = "ABC";
 
-        System.out.println(combinationSum(nums, 7));
+        RandomizedSet a = new RandomizedSet();
+
+        a.insert(1);
+        a.insert(10);
+        a.insert(20);
+        a.insert(30);
+        System.out.println(a.getRandom());
+
+        System.out.println(a.getRandom());
+
 //        for (int i = 0; i < nums2.length; i++) {
 //            System.out.print(nums2[i] + ' ');
 //        }
