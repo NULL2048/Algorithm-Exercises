@@ -1,5 +1,9 @@
 package 体系学习班.class23;
 
+import java.util.ArrayList;
+import java.util.List;
+
+// https://leetcode.cn/problems/n-queens/
 public class Code03_NQueens {
     // 1、方法1
     public static int num1(int n) {
@@ -107,4 +111,85 @@ public class Code03_NQueens {
         end = System.currentTimeMillis();
         System.out.println("cost time: " + (end - start) + "ms");
     }
+
+    // 可以提交力扣的代码
+    class Solution {
+        public List<List<String>> solveNQueens(int n) {
+            // 记录所有的放置方法
+            List<List<String>> ans = new ArrayList<>();
+            // 记录尝试过程中，已放置的皇后位置
+            int[] queenCoordinate = new int[n];
+            // 递归入口
+            process(queenCoordinate, n, 0, ans);
+            return ans;
+        }
+        /*
+            在传参中带了List<List<String>> ans（地址传递），每一种可行的放置方法会存入这个对象中
+         */
+        public void process(int[] queenCoordinate, int n, int row, List<List<String>> ans) {
+            // 当将所有的行都遍历完成，说明这个递归分支的放置方法是可行的
+            if (row == n) {
+                // 当前方法放置皇后的坐标都在queenCoordinate变量中，根据这个变量将放置图写入到ans中
+                addQueenCoordinate(ans, queenCoordinate, n);
+                // 返回
+                return;
+            }
+            // 在第row行，尝试所有的列，看看是不是有效的放置皇后的位置（不与已放置的皇后起冲突）
+            for (int i = 0; i < n; i++) {
+                // 这里就是尝试过程中的无效检测，如果尝试的这个位置本身就是一个无效位置，那么直接就不会进入向下的递归，也就中断了。
+                if (isValid(row, i, queenCoordinate)) {
+                    // 如果当前尝试的这个位置有效，那么就将这个位置设置成为皇后放置位置，然后以这个位置为基准，继续向下层递归，去下一行row + 1尝试
+                    queenCoordinate[row] = i;
+                    process(queenCoordinate, n, row + 1, ans);
+                    // 注意在找到一种放置方案后，递归开始返回，需要还原queenCoordinate的数据，如果不清除上一种放置方法在queenCoordinate中存储的皇后位置，在后面的方法向里面存储皇后放置位置的时候，就会出现混乱的情况，导致两种方法的结果都混在了同一个queenCoordinate中，答案就不对了，所以这种就需要还原现场。
+                    queenCoordinate[row] = 0;
+                }
+
+            }
+            return;
+        }
+        // 判断当前选择的这个摆放位置是不是有效的，会不会和已有的皇后起冲突
+        public boolean isValid(int x, int y, int[] queenCoordinate) {
+            // 0..i-1
+            // 传入的x和y就是要尝试位置的坐标，这个方法就是看这个坐标是不是有效的
+            // 遍历尝试的这一层以上的所有放置的皇后位置，然后去看尝试位置是不是与这些皇后位置冲突
+            for (int i = 0; i < x; i++) {
+                // 不用考虑行冲突，因为已经限定死了，每一行有且只能放一个皇后
+                // 只要纵坐标不相等，这两个位置就没有列冲突
+                // 去检查两个位置的横纵坐标相减的绝对值是不是一样，如果一样说明两个位置在同一条斜线上，就算是起冲突了。其实这个本质就是算两个位置与远点连线的斜率是否一致
+                int a = i;
+                int b = queenCoordinate[i];
+                if ((Math.abs(x - a) == Math.abs(y - b)) || y == b) {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+        // 根据queenCoordinate中存储的坐标位置，转换成放置图示存入ans中
+        // 每执行一次该方法，就会存储一种对整个棋盘的有效放置方法
+        public List<List<String>> addQueenCoordinate(List<List<String>> ans, int[] queenCoordinate, int n) {
+            // 对整个棋盘的有效放置方法就存在rowAns中
+            List<String> rowAns = new ArrayList<>();
+            // 按棋盘从上到下，从左到右遍历
+            for (int row = 0; row < n; row++) {
+                // 棋盘每一行的放置情况就是存入一个String
+                StringBuilder sb = new StringBuilder();
+                for (int i = 0 ; i < n; i++) {
+                    // 未放置皇后的位置赋值"."     queenCoordinate[row]中存储的一个数肯定在0~n范围上，并且只会有这一个数，所以row行的时候else分支只会进入一次，其余都会进入到if分支中
+                    if (queenCoordinate[row] != i) {
+                        sb.append(".");
+                        // 放置皇后的位置赋值"Q"
+                    } else {
+                        sb.append("Q");
+                    }
+                }
+                rowAns.add(sb.toString());
+            }
+            // 将当前找出的放置方法存入到ans中
+            ans.add(rowAns);
+            return ans;
+        }
+    }
+
 }
