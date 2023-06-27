@@ -1,7 +1,7 @@
 package 大厂刷题班.class05;
 
 // 样本对应模型  空间压缩
-// 阉割版  https://leetcode.cn/problems/edit-distance/   这个就是把删除，替换，添加操作的代价都固定成了1
+// 阉割版  https://leetcode.cn/problems/edit-distance/   这个力扣题就是把删除，替换，添加操作的代价都固定成了1
 public class Code03_EditCost {
     public int minDistance(String word1, String word2) {
         if (word1 == null || word2 == null) {
@@ -13,10 +13,20 @@ public class Code03_EditCost {
         return minCost(s1, s2, 1, 1, 1);
     }
 
+    /**
+     * @param s1 字符串1
+     * @param s2 字符串2
+     * @param ac 添加操作的代价
+     * @param rc 替换操作的代价
+     * @param dc 删除操作的代价
+     * @return
+     */
     // for test
     public static int minCost(char[] s1, char[] s2, int ac, int rc, int dc) {
         // dp[i][j]：s1前缀取前i个字符，编辑成s2前缀取j个字符，将s1的前i个字符组成的前缀串如何用最少编辑代价转换成s2的前j个字符的前缀串，最少代价是多少。
         // dp[i][j] = -1表示当前状态下无法编辑成功
+        // 这里一定要注意，i表示的是s1的前i个字符（下标0~下标i-1范围上的字符），不包括下标i位置的字符，也就是说i=0，表示的是下标0之前的字符，也就是空字符串，并不包括下标0位置的字符
+        // j也是同理。所以这道题如果要表示s1和s2全部的字符，就应该是dp[s1.length][s2.length]，而不是dp[s1.length - 1][s2.length]，所以dp数组的长度要多加1个
         int[][] dp = new int[s1.length + 1][s2.length + 1];
 
         // 初始化dp数组  规定dp[0][0] = 0
@@ -32,7 +42,7 @@ public class Code03_EditCost {
         for (int i = 1; i <= s1.length; i++) {
             for (int j = 1; j <= s2.length; j++) {
                 // 分情况讨论
-                // 可能性1：s1的前i-1个字符可以变成s2的前j个字符，即删掉s1的最后一个i位置的字符即可完成编辑，如果dp[i - 1][j] == -1，说明无法编辑成功，赋值为-1
+                // 可能性1：s1的前i-1个字符（不包括下标i-1位置的字符）可以变成s2的前j个字符（不包括下标j位置的字符），即删掉s1的最后一个i位置的字符即可完成编辑，如果dp[i - 1][j] == -1，说明无法编辑成功，赋值为-1
                 int p1 = dp[i - 1][j] != -1 ? dp[i - 1][j] + dc : -1;
                 // 可能性2：s1的前i个字符先变成str2的前j-1个字符，后再加上s2的最后一个j位置的字符即可完成编辑。如果dp[i][j - 1] == -1，说明无法编辑成功，赋值为-1
                 int p2 = dp[i][j - 1] != -1 ? dp[i][j - 1] + ac : -1;
