@@ -69,6 +69,7 @@ public class Code05_EnvelopesProblem {
     public Envelopes[] sort(int[][] envelopes) {
         Envelopes[] envelopesArr = new Envelopes[envelopes.length];
         for (int i = 0; i < envelopes.length; i++) {
+            // 一定要记住构建这种自定义类型的数组的方式，是通过new每一个元素来构建的，而不是直接用arr[i].weight = envelopes[i][0]; arr[i].height = envelopes[i][1];这种方式来构建
             envelopesArr[i] = new Envelopes(envelopes[i][0], envelopes[i][1]);
         }
 

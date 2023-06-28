@@ -5,6 +5,38 @@ package 大厂刷题班.class09;
 // 这个题就是一个算法模板，直接背，以后如果能用上直接无脑套模板。
 public class Code04_LIS {
 
+    // 1、动态规划代码
+    public int lengthOfLIS1(int[] nums) {
+        // 一般子序列的这种题我们就使用动态规划求解。以i位置结尾的子序列怎么怎么样，以这个角度去写动态规划。
+        // dp[i]：以下标i位置结尾的子序列的最长递增长度
+        int[] dp = new int[nums.length];
+        // 先赋初值，以0结尾的子序列递增长度为1
+        dp[0] = 1;
+        // 我们要找到以所有位置为结尾的最长递增子序列中的最大值为返回的答案，也就是找dp数组中的最大值为最终答案
+        // 记录最大递增子序列长度
+        int ans = dp[0];
+        // 遍历计算所有位置结尾情况的最长递增子序列长度
+        for (int i = 1; i < nums.length; i++) {
+            // 记录以i下标结尾的最长递增子序列长度
+            int max = 0;
+            // 去遍历i位置之前的dp答案，找前面能够和i位置组成更长的递增子序列的子序列
+            for (int j = 0; j < i; j++) {
+                // 如果前面的子序列的结尾位置的数小于i位置的数，就说明这个子序列可以和i位置组成更长的递增子序列
+                if (nums[i] > nums[j]) {
+                    // 看看能不能推高最大长度
+                    max = Math.max(max, dp[j]);
+                }
+            }
+            // 将前面的最长递增子序列加上当前i位置的数组成了以i位置结尾的最长递增子序列
+            dp[i] =  max + 1;
+            // 找dp数组中的最大值
+            ans = Math.max(ans, dp[i]);
+        }
+
+        return ans;
+    }
+
+    // 2、优化代码
     public static int lengthOfLIS(int[] arr) {
         if (arr == null || arr.length == 0) {
             return 0;

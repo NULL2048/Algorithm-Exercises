@@ -3,48 +3,59 @@ package 测试;
 import java.util.*;
 
 class Solution {
-    public static int search(int[] nums, int target) {
-        // 设置左右边界指针
-        int l = 0;
-        int r = nums.length - 1;
+        public static int lengthOfLIS(int[] nums) {
+            int[] dp = new int[nums.length];
+            dp[0] = 1;
 
-        while (l <= r) {
-            int mid = (l + r) >> 1;
+            for (int i = 1; i < nums.length; i++) {
+                int max = -1;
+                for (int j = 0; j < i; j++) {
+                    if (nums[i] > nums[j]) {
+                        max = Math.max(max, dp[j]);
+                    }
+                }
 
-            if (nums[mid] == target) {
-                return mid;
+                dp[i] = max != -1 ? max + 1 : 1;
             }
 
 
-            if (nums[l] < nums[mid]) {
-                if (target < nums[mid] && target >= nums[l]) {
-                    r = mid - 1;
-                } else {
-                    l = mid + 1;
-                }
-            } else if (nums[r] > nums[mid]) {
-                if (target > nums[mid] && target <= nums[r]) {
-                    l = mid + 1;
-                } else {
-                    r = mid - 1;
-                }
-            } else if (l == r) {
-                break;
-            }
-
-
+            return dp[nums.length - 1];
         }
 
 
-        // 如果整个二分过程没有找到target，就说明数组中没有target，返回-1
-        return -1;
-    }
+        // public int process(int[] nums, int index) {
+        //     if (index == 0) {
+        //         return 1;
+        //     }
+
+        //     int p1 =
+        // }
+
+        // public int process(int[] nums, int index, int pre, HashMap<Integer, HashMap<Integer, Integer>> dp) {
+        //     if (index == nums.length) {
+        //         return 0;
+        //     }
+
+        //     if (dp.containsKey(index) && dp.get(index).containsKey(pre)) {
+        //         return dp.get(index).get(pre);
+        //     }
+
+        //     int p1 = pre < nums[index] ? process(nums, index + 1, nums[index], dp) + 1 : 0;
+        //     int p2 = process(nums, index + 1, pre, dp);
+
+        //     if (!dp.containsKey(index)) {
+        //         dp.put(index, new HashMap<Integer, Integer>());
+        //     }
+
+        //     dp.get(index).put(pre, Math.max(p1, p2));
+        //     return Math.max(p1, p2);
+        // }
 
     public static void main(String[] args) {
         int[][] grid = {{1,2,7},{3,6,7}};
 
         int[] nums = {2,3,6,7};
-        int[] nums2 = {4,5,6,7,0,1,2};
+        int[] nums2 = {1,3,6,7,9,4,10,5,6};
         int n = 3;
 
         char[] task = {'A','A','A','B','B','B'};
@@ -54,7 +65,7 @@ class Solution {
         String str1 = "abcabcbb";
         String str2 = "ABC";
 
-        System.out.println(search(nums2, 3));
+        System.out.println(lengthOfLIS(nums2));
 
 //        for (int i = 0; i < nums2.length; i++) {
 //            System.out.print(nums2[i] + ' ');
