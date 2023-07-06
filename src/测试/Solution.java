@@ -3,46 +3,33 @@ package 测试;
 import java.util.*;
 
 class Solution {
-    public static int findNumberOfLIS(int[] nums) {
-        int n = nums.length;
-        int[] lens = new int[n];
-        int[] cnts = new int[n];
-        lens[0] = 1;
-        cnts[0] = 1;
-        int allCnt = 1;
-        int maxLen = 1;
+    public static int minCut(String str) {
+        char[] s = str.toCharArray();
 
-        for (int i = 1; i < n; i++) {
-            int preLen = 0;
-            //
-            int preCnt = 0;
+        return process(s, 0);
+    }
 
-            for (int j = 0; j < i; j++) {
-                //
-                if (nums[j] > nums[i] || lens[j] < preLen) {
-                    continue;
-                }
-
-                if (lens[j] > preLen) {
-                    preLen = lens[j];
-                    preCnt = cnts[j];
-                } else {
-                    preCnt += cnts[j];
-                }
-            }
-
-            lens[i] = preLen + 1;
-            cnts[i] = preCnt;
-
-            if (lens[i] > maxLen) {
-                maxLen = lens[i];
-                allCnt = cnts[i];
-            } else if (lens[i] == maxLen) {
-                allCnt += cnts[i];
-            }
+    public static int process(char[] s, int index) {
+        if (index == s.length) {
+            return 0;
         }
 
-        return allCnt;
+        int min = Integer.MAX_VALUE;
+        for (int i = index; i < s.length; i++) {
+            if (ispalindrome(s, index, i)) {
+                min = Math.min(min, process(s, i + 1));
+            }
+        }
+        return min + 1;
+    }
+
+    public static boolean ispalindrome(char[] s, int l, int r) {
+        while (l < r) {
+            if (s[l++] != s[r--]) {
+                return false;
+            }
+        }
+        return true;
     }
 
     public static void main(String[] args) {
@@ -57,9 +44,9 @@ class Solution {
 
 
         String str1 = "abcabcbb";
-        String str2 = "ABC";
+        String str2 = "aab";
 
-        System.out.println(findNumberOfLIS(nums2));
+        System.out.println(minCut(str2));
 
 //        for (int i = 0; i < nums2.length; i++) {
 //            System.out.print(nums2[i] + ' ');

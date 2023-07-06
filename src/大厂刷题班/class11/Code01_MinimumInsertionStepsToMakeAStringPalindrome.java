@@ -72,7 +72,7 @@ public class Code01_MinimumInsertionStepsToMakeAStringPalindrome {
         char[] ans = new char[N + dp[L][R]];
         // 标记结果的左边已经填充到了什么位置
         int ansl = 0;
-        // 标记结果的左右边已经填充到了什么位置
+        // 标记结果的右边已经填充到了什么位置
         int ansr = ans.length - 1;
         while (L < R) {
             // 这里我们先去判断可能性1和可能性2，如果可能性1和可能性2是可以的，直接就近到他们的分支了。

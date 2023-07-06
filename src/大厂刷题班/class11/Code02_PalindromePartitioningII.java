@@ -8,6 +8,148 @@ public class Code02_PalindromePartitioningII {
 
     // 下面的测试链接只测了本题的第一问，直接提交可以通过
     // 本题测试链接 : https://leetcode.cn/problems/palindrome-partitioning-ii/
+    // 1、暴力递归代码
+    class Solution1 {
+        public int minCut(String str) {
+            char[] s = str.toCharArray();
+
+            // 这个方法返回的是最少回文串数，我们要求分割次数，所以要再减1
+            return process(s, 0) - 1;
+        }
+
+        // 返回字符串s[index....s.length-1]最少的回文串数量
+        public int process(char[] s, int index) {
+            // basecase  index到了s.length位置，已经没有字符串了，直接返回0
+            if (index == s.length) {
+                return 0;
+            }
+
+            // 记录s[index....s.length-1]最少的回文串数量，初始化为系统最大值
+            int min = Integer.MAX_VALUE;
+            // 尝试从每一个位置分割
+            for (int i = index; i < s.length; i++) {
+                // 只有当s[index...i]字符串是一个回文串，才能往后面去分割，不然连这一段都不是一个回文串，就不能将它分割出来
+                if (ispalindrome(s, index, i)) {
+                    // 如果当前分割就是一个回文串，那么就再去下一段进行分割
+                    // 取最小值
+                    min = Math.min(min, process(s, i + 1));
+                }
+            }
+            // 这里要加1，当字符串只有一个字符的时候，要算一个回文串，上面的流程并没有给算上
+            return min + 1;
+        }
+
+        // 判断s[l...r]是不是回文串  就是一个暴力模拟
+        public boolean ispalindrome(char[] s, int l, int r) {
+            while (l < r) {
+                if (s[l++] != s[r--]) {
+                    return false;
+                }
+            }
+            return true;
+        }
+    }
+
+    // 2、记忆化搜索代码
+    class Solution2 {
+        public int minCut(String str) {
+            char[] s = str.toCharArray();
+            // dp[i]：字符串s[i....s.length-1]最少的回文串数量
+            int[] dp = new int[s.length];
+            process(s, 0, dp);
+            // 这里存的的是最少回文串数，我们要求分割次数，所以要再减1
+            return dp[0]- 1;
+        }
+
+        public int process(char[] s, int index, int[] dp) {
+            if (index == s.length) {
+                return 0;
+            }
+
+            // 如果重复值就直接返回
+            if (dp[index] != 0) {
+                return dp[index];
+            }
+
+            int min = Integer.MAX_VALUE;
+            for (int i = index; i < s.length; i++) {
+                if (ispalindrome(s, index, i)) {
+                    min = Math.min(min, process(s, i + 1, dp));
+                }
+            }
+
+            // 赋值
+            dp[index] = min + 1;
+            return dp[index];
+        }
+
+        public boolean ispalindrome(char[] s, int l, int r) {
+            while (l < r) {
+                if (s[l++] != s[r--]) {
+                    return false;
+                }
+            }
+            return true;
+        }
+    }
+
+    // 3、优化回文串判断的记忆化搜索代码
+    class Solution {
+        public int minCut(String str) {
+            char[] s = str.toCharArray();
+            int[] dp = new int[s.length];
+            // 构造回文串检查预处理结构
+            boolean[][] check = createCheckMap(s, s.length);
+            process(s, 0, dp, check);
+            // 这个方法返回的是最少回文串数，我们要求分割次数，所以要再减1
+            return dp[0]- 1;
+        }
+
+        public int process(char[] s, int index, int[] dp,  boolean[][] check) {
+            if (index == s.length) {
+                return 0;
+            }
+
+            if (dp[index] != 0) {
+                return dp[index];
+            }
+
+            int min = Integer.MAX_VALUE;
+            for (int i = index; i < s.length; i++) {
+                if (check[index][i]) {
+                    min = Math.min(min, process(s, i + 1, dp, check));
+                }
+            }
+
+            dp[index] = min + 1;
+            return dp[index];
+        }
+
+        // 构造回文串检查预处理结构   其实构造这个预处理结构的过程就是一个动态规划赋值的过程，利用到了动态规划状态转移的思想
+        public boolean[][] createCheckMap(char[] str, int n) {
+            // check[i][j]：i~j范围的字符串是回文串就为true，不是回文串就是false
+            boolean[][] check = new boolean[n][n];
+            // 先给对角线赋值赋值，只有一个字符肯定都是回文串
+            for (int i = 0; i < n; i++) {
+                check[i][i] = true;
+            }
+            // 再给第二条对角线赋值，两个字符，如果两个字符相等，那么就是回文串，如果两个字符不等，就不是回文串
+            for (int i = 0; i < n - 1; i++) {
+                check[i][i + 1] = str[i] == str[i + 1];
+            }
+            // 没有i > j的情况，dp数组左下半部分无效
+            // 给普遍位置赋值，赋值方向通过下面的依赖关系式就能够看出来
+            for (int i = n - 3; i >= 0; i--) {
+                for (int j = i + 2; j < n; j++) {
+                    // 当str[i] == str[j]，并且i+1~j-1范围还是一个回文串，就说明i~j范围是一个回文串
+                    check[i][j] = str[i] == str[j] && check[i + 1][j - 1];
+                }
+            }
+            return check;
+        }
+    }
+
+    // 4、动态规划代码
     public int minCut(String s) {
         char[] str = s.toCharArray();
         int n = str.length;
