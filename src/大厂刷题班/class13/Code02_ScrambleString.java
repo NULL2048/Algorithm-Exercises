@@ -56,8 +56,8 @@ public class Code02_ScrambleString {
             return s1[l1] == s2[l2];
         }
 
-        // 尝试所有的切分位置，遍历所有可能的情况
-        for (int cut = 0; cut < r1; cut++) {
+        // 尝试所有的切分位置，遍历所有可能的情况。就以当前s1的范围，从l1~r1范围上尝试所有的切割位置
+        for (int cut = l1; cut < r1; cut++) {
             // 如果1左对2左，并且1右对2右
             boolean p1 = process0(s1, l1, cut, s2, l2, l2 + (cut - l1)) && process0(s1, cut + 1, r1, s2, l2 + (cut - l1) + 1, r2);
             // 如果1左对2右，并且1右对2左
