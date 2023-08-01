@@ -3,6 +3,32 @@ package 大厂刷题班.class15;
 // 从左往右的尝试模型
 // 测试谅解：https://leetcode.cn/problems/best-time-to-buy-and-sell-stock-with-transaction-fee/
 public class Code06_BestTimeToBuyAndSellStockWithTransactionFee {
+    // 1、动态规划
+    public int maxProfit0(int[] prices, int fee) {
+        int n = prices.length;
+        if (n <= 1) {
+            return 0;
+        }
+
+        int[] buy = new int[n];
+        int[] sell = new int[n];
+
+        buy[0] = -prices[0];
+        sell[0] = 0;
+        buy[1] = Math.max(buy[0], sell[0] - prices[1]);
+        // 规定只有在卖出的时候计算手续费
+        sell[1] = Math.max(sell[0], buy[0] + prices[1] - fee);
+
+        for (int i = 2; i < n; i++) {
+            buy[i] = Math.max(buy[i - 1], sell[i - 1] - prices[i]);
+            // 只有卖出的时候算手续费
+            sell[i] = Math.max(sell[i - 1], buy[i - 1] + prices[i] - fee);
+        }
+
+        return sell[n - 1];
+    }
+
+    // 2、空间压缩
     public int maxProfit(int[] prices, int fee) {
         // 如果数量小于2，最大收益就是0
         if (prices == null || prices.length < 2) {
