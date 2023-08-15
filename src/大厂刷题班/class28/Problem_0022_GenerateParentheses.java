@@ -38,7 +38,7 @@ public class Problem_0022_GenerateParentheses {
                 process(index + 1, path, ans, leftMinusRight + 1, leftRest - 1);
             }
 
-            // 如果此时左括号数量减右括号数量的差值大于0，说明左括号还是多余右括号的，可以继续放右括号
+            // 如果此时左括号数量减右括号数量的差值大于0，说明左括号还是多与右括号的，可以继续放右括号
             if (leftMinusRight > 0) {
                 path[index] = ')';
                 // leftMinusRight - 1   因为加了一个右括号，所以向下传递的差值要减1
